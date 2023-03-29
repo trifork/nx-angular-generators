@@ -1,17 +1,16 @@
 {
   "name": "@trifork/nx-angular-generators",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Generators to be used to create libs according to our guidelines found in @trifork/nx-angular",
   "scripts": {
     "build": "nx build nx-angular-generators",
-    "prepare": "npm version patch && nx build nx-angular-generators",
-    "publish": "npm publish"
+    "publish": "nx build nx-angular-generators"
   },
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "repository": {
-    "url": "https://github.com/trifork/nx-angular.git"
+    "url": "https://github.com/trifork/nx-angular-generators.git"
   },
   "author": "Nicolai Olsen, Bjørn Wiegell, ©Trifork",
   "publishConfig": {

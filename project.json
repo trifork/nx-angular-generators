@@ -25,12 +25,12 @@
             "output": "./src"
           },
           {
-            "input": "./tools/nx-angular-generators",
+            "input": "./src/nx-angular-generators",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./tools/nx-angular-generators",
+            "input": "./src/nx-angular-generators",
             "glob": "executors.json",
             "output": "."
           }

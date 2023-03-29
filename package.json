@@ -3,7 +3,7 @@
   "version": "0.0.16",
   "description": "Generators to be used to create libs according to our guidelines found in @trifork/nx-angular",
   "scripts": {
-    "build": "nx build nx-angular-generators",
+    "build": "nx build nx-angular-generators && cp ./package.json ./dist/package.json",
     "publish": "nx build nx-angular-generators"
   },
   "main": "src/index.js",
@@ -24,5 +24,8 @@
     "rxjs": "^7.8.0",
     "tslib": "^2.5.0",
     "zone.js": "^0.12.0"
+  },
+  "devDependencies": {
+    "typescript": "~4.9.5"
   }
 }

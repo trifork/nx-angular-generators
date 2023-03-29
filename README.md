@@ -1,11 +1,3 @@
-# nx-angular-generators
+# NX-Angular-Generators
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build nx-angular-generators` to build the library.
-
-## Running unit tests
-
-Run `nx test nx-angular-generators` to execute the unit tests via [Jest](https://jestjs.io).
+Generators to be used to create libs according to our guidelines found in @trifork/nx-angular

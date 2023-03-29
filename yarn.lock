@@ -1319,7 +1319,7 @@
     dotenv "~10.0.0"
     semver "7.3.4"
 
-"@nrwl/devkit@15.8.9":
+"@nrwl/devkit@15.8.9", "@nrwl/devkit@>=15.0.0":
   version "15.8.9"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.8.9.tgz#556797672d0efa333c7af5ea252218f0815cecb8"
   integrity sha512-/AbdsBJjo4q0ZCLOGEPTcBTOQz/FZqKi9z/VlvUjwGJKwC5B58cb3F3lfiI7agahf3ODy7vrL5marjF5cOnlLQ==
@@ -4700,6 +4700,14 @@ nth-check@^2.0.1:
   integrity sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==
   dependencies:
     boolbase "^1.0.0"
+
+nx-stylelint@^15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/nx-stylelint/-/nx-stylelint-15.0.0.tgz#a77f93f7a7f692b143193518d3dd9108943a7c1b"
+  integrity sha512-trgyW/aGtYGdfVmOmyHqL1WUm7IlG+v+OqcI9boUqNd5AzKzzOOXeK11UUzW8wn6H4XK20J9rQrqX/JA0oAZdA==
+  dependencies:
+    "@nrwl/devkit" ">=15.0.0"
+    tslib "^2.5.0"
 
 nx@15.8.9:
   version "15.8.9"

@@ -1,0 +1,5 @@
+export * from './lib/<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.actions'
+export * from './lib/<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.reducers'
+export * from './lib/<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.selectors'
+export * from './lib/<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.effects'
+export * from './lib/<%=domainKebabCase%>.store';

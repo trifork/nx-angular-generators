@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Feature",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "domainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of domain to which a feature lib should be added. E.g. 'medicine'. Do not prepend with '/libs/'.\n"
+    },
+    "featureName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "pattern": "^(?!.*[/])(?!.*feature).*$",
+      "x-prompt": "Input the name of the feature, e.g. 'overview'. Do not prepend with 'feature-' or anything else.\n"
+    }
+  },
+  "required": ["domainName", "featureName"]
+}

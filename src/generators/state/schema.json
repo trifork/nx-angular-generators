@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "state",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "domainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of domain to which a state lib should be added. E.g. 'medicine'. Do not prepend with '/libs/'.\n"
+    },
+    "initialSubStoreName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "x-prompt": "Please provide a name for the initial substore"
+    }
+  },
+  "required": ["domainName", "initialSubStoreName"]
+}

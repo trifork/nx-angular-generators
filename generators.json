@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-angular-generators",
+  "version": "0.0.1",
+  "generators": {
+    "state": {
+      "factory": "./src/generators/state/generator",
+      "schema": "./src/generators/state/schema.json",
+      "description": "state generator"
+    },
+    "tags": {
+      "factory": "./src/generators/tags/generator",
+      "schema": "./src/generators/tags/schema.json",
+      "description": "tags generator"
+    },
+    "util": {
+      "factory": "./src/generators/util/generator",
+      "schema": "./src/generators/util/schema.json",
+      "description": "util generator"
+    },
+    "data-access": {
+      "factory": "./src/generators/data-access/generator",
+      "schema": "./src/generators/data-access/schema.json",
+      "description": "data-access generator"
+    },
+    "shared": {
+      "factory": "./src/generators/shared/generator",
+      "schema": "./src/generators/shared/schema.json",
+      "description": "shared generator"
+    },
+    "models": {
+      "factory": "./src/generators/models/generator",
+      "schema": "./src/generators/models/schema.json",
+      "description": "models generator"
+    },
+    "feature": {
+      "factory": "./src/generators/feature/generator",
+      "schema": "./src/generators/feature/schema.json",
+      "description": "feature generator"
+    },
+    "ui": {
+      "factory": "./src/generators/ui/generator",
+      "schema": "./src/generators/ui/schema.json",
+      "description": "ui generator"
+    }
+  }
+}

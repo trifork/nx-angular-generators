@@ -1,0 +1,22 @@
+import { Action, ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
+import { <%=subStorePascalCase%>Reducer, <%=subStorePascalCase%>State } from './<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.reducers';
+
+export const <%=domainAllCaps%>_DOMAIN_FEATURE_KEY = '<%=domainPascalCase%>';
+
+export const <%=domainPascalCase%>DomainSelector = createFeatureSelector<<%=domainPascalCase%>DomainState>(<%=domainAllCaps%>_DOMAIN_FEATURE_KEY);
+
+// Type used to enforce correlation
+// between state type and reducer combination,
+type reducerKeysType<T> = {
+  [K in keyof T]: ActionReducer<T[K], Action>;
+};
+type reducerCombinationType = reducerKeysType<<%=domainPascalCase%>DomainState>;
+
+// Add new reducers to this object to keep them under the correct
+// domain node in debug tools. Domain state interface below must also be updated.
+const reducerObj: reducerCombinationType = { <%=subStorePascalCase%>: <%=subStorePascalCase%>Reducer };
+
+export const <%=domainPascalCase%>DomainCombinedReducers = combineReducers(reducerObj);
+export interface <%=domainPascalCase%>DomainState {
+    <%=subStorePascalCase%>: <%=subStorePascalCase%>State;
+}

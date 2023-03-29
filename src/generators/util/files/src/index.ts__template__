@@ -1,0 +1,1 @@
+export * as <%=domainPascalCase%>Util from './lib/<%=domainKebabCase%>.util';

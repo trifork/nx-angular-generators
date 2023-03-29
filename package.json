@@ -1,0 +1,24 @@
+{
+  "name": "@trifork/nx-angular-generators",
+  "version": "0.0.5",
+  "description": "Generators to be used to create libs according to our guidelines found in @trifork/nx-angular",
+  "main": "src/index.js",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "repository": {
+    "url": "https://github.com/trifork/nx-angular.git"
+  },
+  "author": "Nicolai Olsen, Bjørn Wiegell, ©Trifork",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@angular/compiler": "^15.2.3",
+    "@angular/core": "^15.2.3",
+    "@nrwl/angular": "^15.8.6",
+    "nx-stylelint": "^15.0.0",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.5.0",
+    "zone.js": "^0.12.0"
+  }
+}

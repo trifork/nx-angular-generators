@@ -13,7 +13,7 @@
         "index": 0
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
-      "x-prompt": "Input the name of the superDomain to which a util lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
+      "x-prompt": "Input the name of the superDomain to which a ui lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
     },
     "domainName": {
       "type": "string",

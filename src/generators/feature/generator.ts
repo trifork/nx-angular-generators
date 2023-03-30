@@ -38,8 +38,9 @@ const libType = "feature";
 
 export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  const { featureName, domainName, projectRoot } = normalizedOptions;
-  const libName = `${domainName}-${libType}-${featureName}`;
+  const { superDomainName, featureName, domainName, projectRoot } =
+    normalizedOptions;
+  const libName = `${superDomainName}-${domainName}-${libType}-${featureName}`;
 
   // Generate standard lib
   const sourceTags = generateSourceTagsGeneric(

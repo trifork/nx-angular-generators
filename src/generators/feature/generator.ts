@@ -20,7 +20,9 @@ function normalizeOptions(
   options: FeatureGeneratorSchema
 ): NormalizedSchema {
   const { domainName, featureName } = options;
-  const projectDirectory = `${kebabify(domainName)}/${libType}-${featureName}`;
+  const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
+    domainName
+  )}/${libType}-${featureName}`;
   const projectName = libType;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 

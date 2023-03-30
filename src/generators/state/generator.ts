@@ -26,7 +26,9 @@ function normalizeOptions(
   options: StateGeneratorSchema
 ): NormalizedSchema {
   const initialSubStoreName = options.initialSubStoreName;
-  const projectDirectory = `${kebabify(options.domainName)}/${libType}`;
+  const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
+    options.domainName
+  )}/${libType}`;
   const projectName = libType;
 
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;

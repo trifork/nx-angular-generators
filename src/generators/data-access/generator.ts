@@ -23,9 +23,9 @@ function normalizeOptions(
   tree: Tree,
   options: DataAccessGeneratorSchema
 ): NormalizedSchema {
-  const projectDirectory = `${kebabify(options.domainName)}/${kebabify(
-    libType
-  )}`;
+  const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
+    options.domainName
+  )}/${kebabify(libType)}`;
   const projectName = libType;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 

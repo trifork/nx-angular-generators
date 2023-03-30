@@ -24,9 +24,9 @@ function normalizeOptions(
   tree: Tree,
   options: SharedGeneratorSchema
 ): NormalizedSchema {
-  const projectDirectory = `${kebabify(domainName)}/${options.subDomainName}/${
-    options.libName
-  }`;
+  const projectDirectory = `${options.superDomainName}/${kebabify(
+    domainName
+  )}/${options.subDomainName}/${options.libName}`;
   const projectName = options.libName;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 

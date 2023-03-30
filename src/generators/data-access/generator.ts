@@ -1,10 +1,17 @@
-import { libraryGenerator } from '@nrwl/angular/generators';
-import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nrwl/devkit';
-import * as path from 'path';
-import { formatCapitalizations, kebabify } from '../../utils/naming';
-import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
-import { DataAccessGeneratorSchema } from './schema';
+import { libraryGenerator } from "@nrwl/angular/generators";
+import {
+  formatFiles,
+  generateFiles,
+  getWorkspaceLayout,
+  names,
+  offsetFromRoot,
+  Tree,
+} from "@nrwl/devkit";
+import * as path from "path";
+import { formatCapitalizations, kebabify } from "../../utils/naming";
+import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
+import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
+import { DataAccessGeneratorSchema } from "./schema";
 
 interface NormalizedSchema extends DataAccessGeneratorSchema {
   projectName: string;
@@ -12,8 +19,13 @@ interface NormalizedSchema extends DataAccessGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(tree: Tree, options: DataAccessGeneratorSchema): NormalizedSchema {
-  const projectDirectory = `${kebabify(options.domainName)}/${kebabify(libType)}`;
+function normalizeOptions(
+  tree: Tree,
+  options: DataAccessGeneratorSchema
+): NormalizedSchema {
+  const projectDirectory = `${kebabify(options.domainName)}/${kebabify(
+    libType
+  )}`;
   const projectName = libType;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
@@ -32,16 +44,25 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(libType),
     fileName: options.projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
+    template: "",
   };
-  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  generateFiles(
+    tree,
+    path.join(__dirname, "files"),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
-const libType = 'data_access';
+const libType = "data_access";
 
 export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(options.domainName, libType);
+  const sourceTags = generateSourceTagsGeneric(
+    options.superDomainName,
+    options.domainName,
+    libType
+  );
   await libraryGenerator(tree, {
     buildable: true,
     name: libType,
@@ -52,8 +73,9 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
 
   // Update tags and set rules
   await tagsGenerator(tree, {
-    allowedSubDomainsInShared: ['util', 'auth'],
-    allowedLibTypesInDomain: ['util', 'models'],
+    superDomainName: options.superDomainName,
+    allowedSubDomainsInShared: ["util", "auth"],
+    allowedLibTypesInDomain: ["util", "models"],
     domainName: options.domainName,
     libType,
   });

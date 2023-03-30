@@ -5,12 +5,22 @@
   "title": "",
   "type": "object",
   "properties": {
-    "subDomainName": {
+    "superDomainName": {
       "type": "string",
       "description": "",
       "$default": {
         "$source": "argv",
         "index": 0
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of the superDomain to which a util lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
+    },
+    "subDomainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of shared subdomain to which a lib should be added. E.g. 'auth' or 'ui'. Do not prepend with 'libs/' or 'shared/'.\n"
@@ -20,7 +30,7 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 1
+        "index": 2
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of the lib, e.g. 'data-access' or 'buttons'. Do not prepend with domain or subdomain.\n"
@@ -30,11 +40,11 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 2
+        "index": 3
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "(Optional) add other shared subdomains, that this lib can depend upon. Write multiple subdomains comma separated.\n"
     }
   },
-  "required": ["subDomainName", "libName"]
+  "required": ["subDomainName", "libName", "superDomainName"]
 }

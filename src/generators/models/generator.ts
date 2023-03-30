@@ -1,10 +1,17 @@
-import { libraryGenerator } from '@nrwl/angular/generators';
-import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nrwl/devkit';
-import * as path from 'path';
-import { formatCapitalizations, kebabify } from '../../utils/naming';
-import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
-import { ModelsGeneratorSchema } from './schema';
+import { libraryGenerator } from "@nrwl/angular/generators";
+import {
+  formatFiles,
+  generateFiles,
+  getWorkspaceLayout,
+  names,
+  offsetFromRoot,
+  Tree,
+} from "@nrwl/devkit";
+import * as path from "path";
+import { formatCapitalizations, kebabify } from "../../utils/naming";
+import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
+import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
+import { ModelsGeneratorSchema } from "./schema";
 
 interface NormalizedSchema extends ModelsGeneratorSchema {
   projectName: string;
@@ -12,7 +19,10 @@ interface NormalizedSchema extends ModelsGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(tree: Tree, options: ModelsGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: ModelsGeneratorSchema
+): NormalizedSchema {
   const projectDirectory = `${kebabify(options.domainName)}/${libType}`;
   const projectName = libType;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
@@ -32,16 +42,25 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...formatCapitalizations(options.domainName, true),
     fileName: options.projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
+    template: "",
   };
-  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  generateFiles(
+    tree,
+    path.join(__dirname, "files"),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
-const libType = 'models';
+const libType = "models";
 
 export default async function (tree: Tree, options: ModelsGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(options.domainName, libType);
+  const sourceTags = generateSourceTagsGeneric(
+    options.superDomainName,
+    options.domainName,
+    libType
+  );
   await libraryGenerator(tree, {
     buildable: true,
     name: libType,
@@ -52,6 +71,7 @@ export default async function (tree: Tree, options: ModelsGeneratorSchema) {
 
   // Update tags and set rules
   await tagsGenerator(tree, {
+    superDomainName: options.superDomainName,
     allowedSubDomainsInShared: [],
     allowedLibTypesInDomain: [],
     domainName: options.domainName,

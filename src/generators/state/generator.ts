@@ -1,10 +1,17 @@
-import { libraryGenerator } from '@nrwl/angular/generators';
-import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nrwl/devkit';
-import * as path from 'path';
-import { formatCapitalizations, kebabify } from '../../utils/naming';
-import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
-import { StateGeneratorSchema } from './schema';
+import { libraryGenerator } from "@nrwl/angular/generators";
+import {
+  formatFiles,
+  generateFiles,
+  getWorkspaceLayout,
+  names,
+  offsetFromRoot,
+  Tree,
+} from "@nrwl/devkit";
+import * as path from "path";
+import { formatCapitalizations, kebabify } from "../../utils/naming";
+import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
+import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
+import { StateGeneratorSchema } from "./schema";
 
 interface NormalizedSchema extends StateGeneratorSchema {
   projectName: string;
@@ -12,9 +19,12 @@ interface NormalizedSchema extends StateGeneratorSchema {
   projectDirectory: string;
 }
 
-const libType = 'state';
+const libType = "state";
 
-function normalizeOptions(tree: Tree, options: StateGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: StateGeneratorSchema
+): NormalizedSchema {
   const initialSubStoreName = options.initialSubStoreName;
   const projectDirectory = `${kebabify(options.domainName)}/${libType}`;
   const projectName = libType;
@@ -38,14 +48,23 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...formatCapitalizations(options.initialSubStoreName, false),
     ...formatCapitalizations(options.domainName, true),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
+    template: "",
   };
-  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  generateFiles(
+    tree,
+    path.join(__dirname, "files"),
+    options.projectRoot,
+    templateOptions
+  );
 }
 
 export default async function (tree: Tree, options: StateGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(options.domainName, libType);
+  const sourceTags = generateSourceTagsGeneric(
+    options.superDomainName,
+    options.domainName,
+    libType
+  );
   await libraryGenerator(tree, {
     name: libType,
     buildable: true,
@@ -56,10 +75,11 @@ export default async function (tree: Tree, options: StateGeneratorSchema) {
 
   // Update tags and set rules
   await tagsGenerator(tree, {
-    allowedSubDomainsInShared: ['auth', 'data-access'],
-    allowedLibTypesInDomain: ['data_access', 'models', 'util'],
+    superDomainName: options.superDomainName,
+    allowedSubDomainsInShared: ["auth", "data-access"],
+    allowedLibTypesInDomain: ["data_access", "models", "util"],
     domainName: options.domainName,
-    libType: 'state',
+    libType: "state",
   });
 
   // Add template files

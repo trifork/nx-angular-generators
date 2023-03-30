@@ -5,5 +5,5 @@
   "title": "",
   "type": "object",
   "properties": {},
-  "required": []
+  "required": ["domainName", "superDomainName"]
 }

@@ -5,7 +5,7 @@
   "title": "",
   "type": "object",
   "properties": {
-    "domainName": {
+    "superDomainName": {
       "type": "string",
       "description": "",
       "$default": {
@@ -13,18 +13,28 @@
         "index": 0
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
-      "x-prompt": "Input the name of domain to which a feature lib should be added. E.g. 'medicine'. Do not prepend with '/libs/'.\n"
+      "x-prompt": "Input the name of the superDomain to which a util lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
     },
-    "featureName": {
+    "domainName": {
       "type": "string",
       "description": "",
       "$default": {
         "$source": "argv",
         "index": 1
       },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of domain to which a feature lib should be added. E.g. 'medicine'. Do not prepend with '/libs/' or superdomain name.\n"
+    },
+    "featureName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      },
       "pattern": "^(?!.*[/])(?!.*feature).*$",
       "x-prompt": "Input the name of the feature, e.g. 'overview'. Do not prepend with 'feature-' or anything else.\n"
     }
   },
-  "required": ["domainName", "featureName"]
+  "required": ["domainName", "featureName", "superDomainName"]
 }

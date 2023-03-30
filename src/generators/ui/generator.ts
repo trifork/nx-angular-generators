@@ -1,10 +1,13 @@
-import { libraryGenerator } from '@nrwl/angular/generators';
-import { formatFiles, getWorkspaceLayout, Tree } from '@nrwl/devkit';
-import { scssGenerator, configurationGenerator as stylelintConfigGenerator } from 'nx-stylelint';
-import { kebabify } from '../../utils/naming';
-import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
-import { UIGeneratorSchema } from './schema';
+import { libraryGenerator } from "@nrwl/angular/generators";
+import { formatFiles, getWorkspaceLayout, Tree } from "@nrwl/devkit";
+import {
+  scssGenerator,
+  configurationGenerator as stylelintConfigGenerator,
+} from "nx-stylelint";
+import { kebabify } from "../../utils/naming";
+import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
+import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
+import { UIGeneratorSchema } from "./schema";
 
 interface NormalizedSchema extends UIGeneratorSchema {
   projectName: string;
@@ -12,7 +15,10 @@ interface NormalizedSchema extends UIGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(tree: Tree, options: UIGeneratorSchema): NormalizedSchema {
+function normalizeOptions(
+  tree: Tree,
+  options: UIGeneratorSchema
+): NormalizedSchema {
   const projectDirectory = `${kebabify(options.domainName)}/${libType}`;
   const projectName = libType;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
@@ -25,19 +31,23 @@ function normalizeOptions(tree: Tree, options: UIGeneratorSchema): NormalizedSch
   };
 }
 
-const libType = 'ui';
+const libType = "ui";
 
 export default async function (tree: Tree, options: UIGeneratorSchema) {
   const { domainName } = options;
   const libName = `${domainName}-${libType}`;
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(domainName, libType);
+  const sourceTags = generateSourceTagsGeneric(
+    options.superDomainName,
+    domainName,
+    libType
+  );
   await libraryGenerator(tree, {
     buildable: true,
     name: libType,
     standalone: true,
     displayBlock: true,
-    style: 'scss',
+    style: "scss",
     simpleName: true,
     directory: domainName,
     tags: Object.values(sourceTags).join(),
@@ -47,7 +57,7 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
   await stylelintConfigGenerator(tree, {
     project: libName,
     skipFormat: false,
-    formatter: 'string',
+    formatter: "string",
   });
 
   // Generate scss
@@ -58,8 +68,9 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
 
   // Update tags and set rules
   await tagsGenerator(tree, {
-    allowedSubDomainsInShared: ['ui'],
-    allowedLibTypesInDomain: ['util', 'models'],
+    superDomainName: options.superDomainName,
+    allowedSubDomainsInShared: ["ui"],
+    allowedLibTypesInDomain: ["util", "models"],
     domainName: options.domainName,
     libType,
   });

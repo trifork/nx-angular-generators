@@ -79,7 +79,7 @@ function generateAllowedTagCombinations(
   // Construct shared tags, add all of shared, if specified in options
   const sharedTagsAllowed: string[] =
     !isSharedDomainOptions(options) && options.allOfSharedAllowed
-      ? ["shared"]
+      ? [options.superDomainName + "-shared"]
       : [];
   options.allowedSubDomainsInShared.forEach((subdomain) => {
     const domain = "shared";

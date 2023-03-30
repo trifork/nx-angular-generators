@@ -27,7 +27,7 @@ export function generateSourceTagsGeneric(
     )}-${kebabify(libType)}`,
   };
   if (libName)
-    returnVar.superDomainDomainLibAndName = `scope:scope:${kebabify(
+    returnVar.superDomainDomainLibAndName = `scope:${kebabify(
       superDomainName
     )}-${kebabify(domainName)}-${kebabify(libType)}-${kebabify(libName)}`;
   return returnVar;

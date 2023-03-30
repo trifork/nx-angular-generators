@@ -40,7 +40,7 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   const { projectName, featureName, domainName, projectRoot, superDomainName } =
     normalizedOptions;
-  const libName = `${superDomainName}-${domainName}-${libType}-${featureName}`;
+  const fullResultingProjectName = `${superDomainName}-${domainName}-${libType}-${featureName}`;
 
   // Generate standard lib
   const sourceTags = generateSourceTagsGeneric(
@@ -62,18 +62,18 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     tags: Object.values(sourceTags).join(),
   });
 
-  //   // Generate stylelint
-  //   await stylelintConfigGenerator(tree, {
-  //     project: libName,
-  //     skipFormat: false,
-  //     formatter: "string",
-  //   });
+  // Generate stylelint
+  await stylelintConfigGenerator(tree, {
+    project: fullResultingProjectName,
+    skipFormat: false,
+    formatter: "string",
+  });
 
-  //   // Generate scss
-  //   await scssGenerator(tree, {
-  //     project: libName,
-  //     skipFormat: false,
-  //   });
+  // Generate scss
+  await scssGenerator(tree, {
+    project: fullResultingProjectName,
+    skipFormat: false,
+  });
 
   // Update tags and set rules
   await tagsGenerator(tree, {
@@ -86,8 +86,8 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     libName: featureName,
   });
 
-  // Prune compileroptions from the new tsconfig
-  //   pruneCompilerOptions(tree, projectRoot);
+  //   Prune compileroptions from the new tsconfig
+  pruneCompilerOptions(tree, projectRoot);
 
   await formatFiles(tree);
 }

@@ -143,7 +143,7 @@ export async function tagsGenerator(
   const allowedTags = generateAllowedTagCombinations(options);
 
   // Add rules to existing .eslintrc
-  const eslintPath = `${tree.root}/.eslintrc.json`;
+  const eslintPath = `${tree.root}/.eslintrc.base.json`;
   const existingEslintConfig: eslintJSON = await readJsonFile(eslintPath);
 
   try {

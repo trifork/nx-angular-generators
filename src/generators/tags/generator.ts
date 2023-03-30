@@ -57,9 +57,12 @@ function generateAllowedTagCombinationsGeneric(
 ): string[] {
   const allowedLibsInDomain: Partial<AllowedLibsInDomainTagCollection> = {};
   const genericDomainKebab = kebabify(options.domainName);
+  const genericSuperDomainKebab = kebabify(options.superDomainName);
   options.allowedLibTypesInDomain.forEach((libType) => {
     const libKebab = kebabify(libType);
-    allowedLibsInDomain[libType] = `${genericDomainKebab}-${libKebab}`;
+    allowedLibsInDomain[
+      libType
+    ] = `${genericSuperDomainKebab}-${genericDomainKebab}-${libKebab}`;
   });
   return Object.values(allowedLibsInDomain);
 }
@@ -80,8 +83,9 @@ function generateAllowedTagCombinations(
       : [];
   options.allowedSubDomainsInShared.forEach((subdomain) => {
     const domain = "shared";
+    const superDomain = options.superDomainName;
     const subDomainKebab = kebabify(subdomain);
-    sharedTagsAllowed.push(`${domain}-${subDomainKebab}`);
+    sharedTagsAllowed.push(`${superDomain}-${domain}-${subDomainKebab}`);
   });
   return [...sameDomainTagsAllowed, ...sharedTagsAllowed].map(
     (tag) => `scope:${tag}`

@@ -40,7 +40,7 @@ export function generateSourceTagsShared(
 ): SourceTagCollectionShared {
   return {
     superDomain: `scope:${kebabify(superDomain)}`,
-    superDomainAndDomain: `scope:${kebabify(subDomainName)}-${kebabify(
+    superDomainAndDomain: `scope:${kebabify(superDomain)}-${kebabify(
       domainName
     )}`,
     superDomainDomainAndSubDomain: `scope:${kebabify(superDomain)}-${kebabify(

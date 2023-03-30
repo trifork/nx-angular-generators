@@ -69,7 +69,7 @@ export default async function (tree: Tree, options: StateGeneratorSchema) {
     name: libType,
     buildable: true,
     skipModule: true,
-    directory: options.domainName,
+    directory: options.superDomainName + "/" + options.domainName,
     tags: Object.values(sourceTags).join(),
   });
 

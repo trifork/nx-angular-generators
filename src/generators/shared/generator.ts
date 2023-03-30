@@ -68,7 +68,7 @@ export default async function (tree: Tree, options: SharedGeneratorSchema) {
     buildable: true,
     name: options.libName,
     skipModule: true,
-    directory: `${domainName}/${options.subDomainName}`,
+    directory: `${options.superDomainName}/${domainName}/${options.subDomainName}`,
     tags: Object.values(sourceTags).join(),
   });
 

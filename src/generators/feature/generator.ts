@@ -23,7 +23,7 @@ function normalizeOptions(
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     domainName
   )}/${libType}-${featureName}`;
-  const projectName = libType;
+  const projectName = `${libType}-${featureName}`;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
   return {
@@ -38,26 +38,27 @@ const libType = "feature";
 
 export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  const { superDomainName, featureName, domainName, projectRoot } =
+  const { projectName, featureName, domainName, projectRoot, superDomainName } =
     normalizedOptions;
   const libName = `${superDomainName}-${domainName}-${libType}-${featureName}`;
 
   // Generate standard lib
   const sourceTags = generateSourceTagsGeneric(
+    superDomainName,
     domainName,
     libType,
     featureName
   );
   await libraryGenerator(tree, {
     buildable: true,
-    name: `${libType}-${featureName}`,
+    name: projectName,
     standalone: true,
     routing: true,
     lazy: true,
     displayBlock: true,
     style: "scss",
     simpleName: true,
-    directory: domainName,
+    directory: superDomainName + "/" + domainName,
     tags: Object.values(sourceTags).join(),
   });
 

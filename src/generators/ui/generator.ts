@@ -36,52 +36,51 @@ function normalizeOptions(
 const libType = "ui";
 
 export default async function (tree: Tree, options: UIGeneratorSchema) {
-  const { domainName } = options;
-  const libName = `${domainName}-${libType}`;
+  const normalizedOptions = normalizeOptions(tree, options);
+  const { projectName, domainName, projectRoot, superDomainName } =
+    normalizedOptions;
+  const fullResultingProjectName = `${superDomainName}-${domainName}-${libType}`;
   // Generate standard lib
   const sourceTags = generateSourceTagsGeneric(
-    options.superDomainName,
+    superDomainName,
     domainName,
     libType
   );
   await libraryGenerator(tree, {
     buildable: true,
-    name: libType,
+    name: projectName,
     standalone: true,
     displayBlock: true,
     style: "scss",
     simpleName: true,
-    directory: domainName,
+    directory: superDomainName + "/" + domainName,
     tags: Object.values(sourceTags).join(),
   });
 
   // Generate stylelint
   await stylelintConfigGenerator(tree, {
-    project: libName,
+    project: fullResultingProjectName,
     skipFormat: false,
     formatter: "string",
   });
 
   // Generate scss
   await scssGenerator(tree, {
-    project: libName,
+    project: fullResultingProjectName,
     skipFormat: false,
   });
 
   // Update tags and set rules
   await tagsGenerator(tree, {
-    superDomainName: options.superDomainName,
+    superDomainName: superDomainName,
     allowedSubDomainsInShared: ["ui"],
     allowedLibTypesInDomain: ["util", "models"],
-    domainName: options.domainName,
+    domainName: domainName,
     libType,
   });
 
-  // Add template files
-  const normalizedOptions = normalizeOptions(tree, options);
-
   // Prune compileroptions from the new tsconfig
-  pruneCompilerOptions(tree, normalizedOptions.projectRoot);
+  pruneCompilerOptions(tree, projectRoot);
 
   await formatFiles(tree);
 }

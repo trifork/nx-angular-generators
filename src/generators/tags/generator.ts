@@ -151,7 +151,7 @@ export async function tagsGenerator(
 
     const overrides = existingEslintConfig.overrides;
     const tsOverrideObjs = overrides?.filter((overrideObj) => {
-      return overrideObj.files.includes("*.ts");
+      return "@nrwl/nx/enforce-module-boundaries" in overrideObj.rules;
     });
     if (!Array.isArray(tsOverrideObjs) || tsOverrideObjs.length !== 1)
       throw new Error(

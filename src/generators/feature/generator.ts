@@ -61,18 +61,18 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     tags: Object.values(sourceTags).join(),
   });
 
-  // Generate stylelint
-  await stylelintConfigGenerator(tree, {
-    project: libName,
-    skipFormat: false,
-    formatter: "string",
-  });
+  //   // Generate stylelint
+  //   await stylelintConfigGenerator(tree, {
+  //     project: libName,
+  //     skipFormat: false,
+  //     formatter: "string",
+  //   });
 
-  // Generate scss
-  await scssGenerator(tree, {
-    project: libName,
-    skipFormat: false,
-  });
+  //   // Generate scss
+  //   await scssGenerator(tree, {
+  //     project: libName,
+  //     skipFormat: false,
+  //   });
 
   // Update tags and set rules
   await tagsGenerator(tree, {

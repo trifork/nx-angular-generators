@@ -84,8 +84,8 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
   });
 
   // Prune compileroptions from the new tsconfig
-  pruneCompilerOptions(tree, projectRoot);
-  changeEslintPrefix(tree, projectRoot, selectorPrefix);
+  await pruneCompilerOptions(tree, projectRoot);
+  await changeEslintPrefix(tree, projectRoot, selectorPrefix);
 
   await formatFiles(tree);
 }

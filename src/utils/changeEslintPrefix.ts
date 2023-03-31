@@ -32,7 +32,7 @@ export async function changeEslintPrefix(
   projectRoot: string,
   newPrefix: string
 ) {
-  updateJson(tree, `${projectRoot}/eslintrc.json`, (eslint: eslintJSON) => {
+  updateJson(tree, `${projectRoot}/.eslintrc.json`, (eslint: eslintJSON) => {
     const directiveSelectorRule = eslint?.overrides?.filter(
       (override) => "@angular-eslint/directive-selector" in override
     )[0].rules["@angular-eslint/directive-selector"];

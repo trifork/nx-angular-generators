@@ -8,6 +8,7 @@ import { kebabify } from "../../utils/naming";
 import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
 import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
 import { FeatureGeneratorSchema } from "./schema";
+import { changeEslintPrefix } from "../../utils/changeEslintPrefix";
 
 interface NormalizedSchema extends FeatureGeneratorSchema {
   projectName: string;
@@ -41,6 +42,7 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const { projectName, featureName, domainName, projectRoot, superDomainName } =
     normalizedOptions;
   const fullResultingProjectName = `${superDomainName}-${domainName}-${libType}-${featureName}`;
+  const selectorPrefix = kebabify(superDomainName);
 
   // Generate standard lib
   const sourceTags = generateSourceTagsGeneric(
@@ -88,7 +90,8 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   });
 
   //   Prune compileroptions from the new tsconfig
-  pruneCompilerOptions(tree, projectRoot);
+  await pruneCompilerOptions(tree, projectRoot);
+  await changeEslintPrefix(tree, projectRoot, selectorPrefix);
 
   await formatFiles(tree);
 }

@@ -1,6 +1,6 @@
 {
   "name": "@trifork/nx-angular-generators",
-  "version": "0.0.31",
+  "version": "0.0.34",
   "description": "Generators to be used to create libs according to our guidelines found in @trifork/nx-angular",
   "scripts": {
     "build": "nx build nx-angular-generators && cp ./package.json ./dist/package.json",
@@ -21,7 +21,7 @@
     "@angular/compiler": "^15.2.3",
     "@angular/core": "^15.2.3",
     "@nrwl/angular": "^15.8.6",
-    "nx-stylelint": "^15.0.0",
+    "nx-stylelint": "15.8.9",
     "rxjs": "^7.8.0",
     "tslib": "^2.5.0",
     "zone.js": "^0.12.0"

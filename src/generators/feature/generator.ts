@@ -50,6 +50,7 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     featureName
   );
   await libraryGenerator(tree, {
+    selector: `${kebabify(superDomainName)}-rename-this`,
     buildable: true,
     name: projectName,
     standalone: true,

@@ -47,6 +47,7 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
     libType
   );
   await libraryGenerator(tree, {
+    selector: `${kebabify(superDomainName)}-rename-this`,
     buildable: true,
     name: projectName,
     standalone: true,

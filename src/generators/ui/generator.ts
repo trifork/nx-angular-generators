@@ -8,7 +8,7 @@ import { kebabify } from "../../utils/naming";
 import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
 import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
 import { UIGeneratorSchema } from "./schema";
-import { changeEslintPrefix } from "src/utils/changeEslintPrefix";
+import { changeEslintPrefix } from "../../utils/changeEslintPrefix";
 
 interface NormalizedSchema extends UIGeneratorSchema {
   projectName: string;

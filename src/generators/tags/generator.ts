@@ -9,6 +9,10 @@ import {
   TagsGeneratorOptionsGeneric,
   TagsGeneratorOptionsShared,
 } from "./generator.model";
+import {
+  eslintJSON,
+  moduleBoundsRuleConfig,
+} from "src/utils/changeEslintPrefix";
 
 // Tags to be set on the lib itself (package.json)
 export function generateSourceTagsGeneric(
@@ -97,19 +101,6 @@ export default async function () {
 }
 
 // Partial types for the JSON imported from .eslintrc.json
-type ruleConfig = [
-  string,
-  {
-    allow: string[];
-    depConstraints: { sourceTag: string; onlyDependOnLibsWithTags: string[] }[];
-  }
-];
-interface eslintJSON {
-  overrides?: {
-    files: string[];
-    rules: { "@nrwl/nx/enforce-module-boundaries"?: ruleConfig };
-  }[];
-}
 
 export async function tagsGenerator(
   tree: Tree,
@@ -173,7 +164,7 @@ export async function tagsGenerator(
       sourceTag: mostSpecificSourceTag,
       onlyDependOnLibsWithTags: Object.values(allowedTags),
     };
-    const newBounds: ruleConfig = [
+    const newBounds: moduleBoundsRuleConfig = [
       "error",
       {
         allow: [],

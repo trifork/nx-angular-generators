@@ -8,6 +8,7 @@ import { kebabify } from "../../utils/naming";
 import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
 import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
 import { UIGeneratorSchema } from "./schema";
+import { changeEslintPrefix } from "../../utils/changeEslintPrefix";
 
 interface NormalizedSchema extends UIGeneratorSchema {
   projectName: string;
@@ -46,7 +47,10 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
     domainName,
     libType
   );
+  const selectorPrefix = kebabify(superDomainName);
+
   await libraryGenerator(tree, {
+    selector: `${selectorPrefix}-rename-this`,
     buildable: true,
     name: projectName,
     standalone: true,
@@ -80,7 +84,8 @@ export default async function (tree: Tree, options: UIGeneratorSchema) {
   });
 
   // Prune compileroptions from the new tsconfig
-  pruneCompilerOptions(tree, projectRoot);
+  await pruneCompilerOptions(tree, projectRoot);
+  await changeEslintPrefix(tree, projectRoot, selectorPrefix);
 
   await formatFiles(tree);
 }

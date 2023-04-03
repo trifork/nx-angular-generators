@@ -63,3 +63,5 @@
 
 # Go workspace file
 **/go.work
+
+.angular

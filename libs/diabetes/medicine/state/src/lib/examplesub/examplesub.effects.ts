@@ -1,0 +1,23 @@
+import { Injectable, inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { HttpClient } from '@angular/common/http';
+import * as actions from './examplesub.actions';
+import { catchError, concatMap, map, of } from 'rxjs';
+
+@Injectable()
+export class ExamplesubEffects {
+  private actions$ = inject(Actions);
+  private http = inject(HttpClient);
+
+    getData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.getData),
+      concatMap((action) =>
+        this.http.get(`https://www.google.com/search?q=${action.requestPayload}`).pipe(
+          map((response) => actions.getDataSuccess({ data: 'Data' })),
+          catchError(() => of(actions.getDataFailure()))
+        )
+      )
+    )
+  );
+}

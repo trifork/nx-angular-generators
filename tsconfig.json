@@ -21,7 +21,10 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "paths": {
+      "@trifork/nx-angular-generators": ["./*"]
+    }
   },
   "exclude": ["node_modules", "tmp"],
   "files": [],

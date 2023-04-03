@@ -27,6 +27,8 @@
     "zone.js": "^0.12.0"
   },
   "devDependencies": {
+    "@nrwl/devkit": "15.8.9",
+    "@types/node": "latest",
     "typescript": "~4.9.5"
   }
 }

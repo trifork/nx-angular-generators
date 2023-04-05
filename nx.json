@@ -4,12 +4,9 @@
       "analyzeSourceFiles": true
     }
   },
-  "npmScope": "example",
+  "npmScope": "@example",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
@@ -24,13 +21,8 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "test": {
       "inputs": [
@@ -48,11 +40,7 @@
       ]
     },
     "build-storybook": {
-      "inputs": [
-        "default",
-        "^production",
-        "!{projectRoot}/.storybook/**/*"
-      ]
+      "inputs": ["default", "^production", "!{projectRoot}/.storybook/**/*"]
     },
     "stylelint": {
       "inputs": [

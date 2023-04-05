@@ -4,7 +4,7 @@
       "analyzeSourceFiles": true
     }
   },
-  "npmScope": "@example",
+  "npmScope": "example",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [

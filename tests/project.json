@@ -1,0 +1,24 @@
+{
+  "name": "nx-angular-generators-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "test/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "my-plugin:build",
+        "jestConfig": "test/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["tests/**/*.ts"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["nx-angular-generators"]
+}

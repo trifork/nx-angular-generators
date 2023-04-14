@@ -1,4 +1,5 @@
 {
+  "license": "UNLICENSED",
   "npmScope": "example",
   "name": "@trifork/nx-angular-generators",
   "version": "0.0.50",

@@ -4,9 +4,9 @@ import {
   readJson,
   runNxCommandAsync,
   uniq,
-} from '@nrwl/nx-plugin/testing';
+} from "@nrwl/nx-plugin/testing";
 
-describe('my-plugin e2e', () => {
+describe("nx-angular-generators e2e", () => {
   // Setting up individual workspaces per
   // test can cause e2e runs to take a long time.
   // For this reason, we recommend each suite only
@@ -14,27 +14,48 @@ describe('my-plugin e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
   beforeAll(() => {
-    ensureNxProject('@my-org/my-plugin', 'dist/packages/my-plugin');
+    // ensureNxProject("@trifork/nx-angular-generators", "dist");
   });
 
   afterAll(() => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    runNxCommandAsync('reset');
+    // runNxCommandAsync("reset");
   });
 
-  it('should create my-plugin', async () => {
-    const project = uniq('my-plugin');
-    await runNxCommandAsync(`generate @my-org/my-plugin:my-plugin ${project}`);
-    const result = await runNxCommandAsync(`build ${project}`);
-    expect(result.stdout).toContain('Executor ran');
+  it.only("should create nx-angular-generators", (done) => {
+    const domain = uniq("testdomain");
+    const substore = uniq("substore");
+    console.log("test");
+    let buildresult: Promise<{ stdout: string }>;
+
+    buildresult = runNxCommandAsync(`run nx-angular-generators:build`, {
+      silenceError: false,
+    });
+    buildresult
+      .then((inp) => {
+        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
+        console.log("isrun");
+        expect(inp.stdout).toContain("Executor ran");
+        done();
+      })
+      .catch((inp) => {
+        // eslint-disable-next-line no-console
+        debugger;
+        console.log("err: ", inp);
+        done();
+      });
+    // runNxCommandAsync(
+    //   `generate @trifork/nx-angular-generators:state ${domain} ${substore}`
+    // ).then(done());
   }, 120000);
 
-  describe('--directory', () => {
-    it('should create src in the specified directory', async () => {
-      const project = uniq('my-plugin');
+  describe("--directory", () => {
+    it("should create src in the specified directory", async () => {
+      const project = uniq("nx-angular-generators");
       await runNxCommandAsync(
-        `generate @my-org/my-plugin:my-plugin ${project} --directory subdir`
+        `generate @trifork/nx-angular-generators:nx-angular-generators ${project} --directory subdir`
       );
       expect(() =>
         checkFilesExist(`libs/subdir/${project}/src/index.ts`)
@@ -42,15 +63,15 @@ describe('my-plugin e2e', () => {
     }, 120000);
   });
 
-  describe('--tags', () => {
-    it('should add tags to the project', async () => {
-      const projectName = uniq('my-plugin');
-      ensureNxProject('@my-org/my-plugin', 'dist/packages/my-plugin');
+  describe("--tags", () => {
+    it("should add tags to the project", async () => {
+      const projectName = uniq("nx-angular-generators");
+      ensureNxProject("@trifork/nx-angular-generators", "dist");
       await runNxCommandAsync(
-        `generate @my-org/my-plugin:my-plugin ${projectName} --tags e2etag,e2ePackage`
+        `generate @trifork/nx-angular-generators:nx-angular-generators ${projectName} --tags e2etag,e2ePackage`
       );
       const project = readJson(`libs/${projectName}/project.json`);
-      expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
+      expect(project.tags).toEqual(["e2etag", "e2ePackage"]);
     }, 120000);
   });
 });

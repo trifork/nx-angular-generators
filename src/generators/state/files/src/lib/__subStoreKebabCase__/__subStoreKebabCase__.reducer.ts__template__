@@ -14,7 +14,7 @@ export interface <%=subStorePascalCase%>State {
   status: HttpRequestStatus;
 }
 
-export const initialState: <%=subStoreCamelCase%>State = {
+export const initialState: <%=subStorePascalCase%>State = {
   data: '',
   status: HttpRequestStatus.IDLE,
 };

@@ -9,7 +9,7 @@
     "src/**/*.ts",
     "src/generators/state/files/src/lib/__subStoreKebabCase__/__subStoreKebabCase__.actions.ts__template__",
     "src/generators/state/files/src/lib/__subStoreKebabCase__/__subStoreKebabCase__.effects.ts__template__",
-    "src/generators/state/files/src/lib/__subStoreKebabCase__/__subStoreKebabCase__.reducers.ts__template__",
+    "src/generators/state/files/src/lib/__subStoreKebabCase__/__subStoreKebabCase__.reducer.ts__template__",
     "src/generators/state/files/src/lib/__subStoreKebabCase__/__subStoreKebabCase__.selectors.ts__template__",
     "src/generators/state/files/src/lib/__domainKebabCase__.store.ts__template__",
     "src/generators/util/files/src/date/date.util.ts__template__",

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "nx build nx-angular-generators && cp ./package.json ./dist/package.json",
     "bumpbuild": "npm version patch && nx build nx-angular-generators && cp ./package.json ./dist/package.json",
-    "publish": "nx build nx-angular-generators"
+    "publish": "nx build nx-angular-generators",
+    "generate:example:state": "nx generate @trifork/nx-angular-generators:state diabetes medicine substore2"
   },
   "main": "src/index.js",
   "generators": "./generators.json",

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import * as actions from './<%=subStoreKebabCase%>.actions';
+import * as actions from './substore2.actions';
 
 export enum HttpRequestStatus {
   IDLE = 'IDLE',
@@ -9,18 +9,18 @@ export enum HttpRequestStatus {
   SUCCESS = 'SUCCESS',
 }
 
-export interface <%=subStorePascalCase%>State {
+export interface Substore2State {
   data: string;
   status: HttpRequestStatus;
 }
 
-export const InitialState: <%=subStorePascalCase%>State = {
+export const initialState: Substore2State = {
   data: '',
   status: HttpRequestStatus.IDLE,
 };
 
-export const <%=subStorePascalCase%>Reducer = createReducer(
-  InitialState,
+export const substore2Reducer = createReducer(
+  initialState,
   on(actions.getData, (state) => ({
     ...state,
     status: HttpRequestStatus.IN_PROGRESS,

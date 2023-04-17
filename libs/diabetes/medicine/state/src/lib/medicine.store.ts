@@ -1,9 +1,18 @@
-import { Action, ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
-import { ExamplesubReducer, ExamplesubState } from './examplesub/examplesub.reducers';
+import {
+  Action,
+  ActionReducer,
+  combineReducers,
+  createFeatureSelector,
+} from '@ngrx/store';
+import {
+  substore2Reducer,
+  Substore2State,
+} from './substore2/substore2.reducer';
 
 export const MEDICINE_DOMAIN_FEATURE_KEY = 'Medicine';
 
-export const MedicineDomainSelector = createFeatureSelector<MedicineDomainState>(MEDICINE_DOMAIN_FEATURE_KEY);
+export const MedicineDomainSelector =
+  createFeatureSelector<MedicineDomainState>(MEDICINE_DOMAIN_FEATURE_KEY);
 
 // Type used to enforce correlation
 // between state type and reducer combination,
@@ -14,9 +23,9 @@ type reducerCombinationType = reducerKeysType<MedicineDomainState>;
 
 // Add new reducers to this object to keep them under the correct
 // domain node in debug tools. Domain state interface below must also be updated.
-const reducerObj: reducerCombinationType = { Examplesub: ExamplesubReducer };
+const reducerObj: reducerCombinationType = { substore2: Substore2Reducer };
 
 export const MedicineDomainCombinedReducers = combineReducers(reducerObj);
 export interface MedicineDomainState {
-    Examplesub: ExamplesubState;
+  substore2: Substore2State;
 }

@@ -14,12 +14,12 @@ export interface <%=subStorePascalCase%>State {
   status: HttpRequestStatus;
 }
 
-export const InitialState: <%=subStorePascalCase%>State = {
+export const InitialState: <%=subStoreCamelCase%>State = {
   data: '',
   status: HttpRequestStatus.IDLE,
 };
 
-export const <%=subStorePascalCase%>Reducer = createReducer(
+export const <%=subStoreCamelCase%>Reducer = createReducer(
   InitialState,
   on(actions.getData, (state) => ({
     ...state,

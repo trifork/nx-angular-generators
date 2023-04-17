@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { <%=domainPascalCase%>DomainSelector } from '../<%=domainKebabCase%>.store';
 
-export const select<%=subStorePascalCase%>State = createSelector(<%=domainPascalCase%>DomainSelector, (domainState) => domainState.<%=subStorePascalCase%>);
+export const select<%=subStorePascalCase%>State = createSelector(<%=domainPascalCase%>DomainSelector, (domainState) => domainState.<%=subStoreCamelCase%>);
 
 export const select<%=subStorePascalCase%>Data = createSelector(select<%=subStorePascalCase%>State, (state) => state.data);
 export const select<%=subStorePascalCase%>Status = createSelector(select<%=subStorePascalCase%>State, (state) => state.status);

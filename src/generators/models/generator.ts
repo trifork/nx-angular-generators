@@ -74,7 +74,7 @@ export default async function (tree: Tree, options: ModelsGeneratorSchema) {
   // Update tags and set rules
   await tagsGenerator(tree, {
     superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: [],
+    allowedSubDomainsInShared: ["api-models", "models"],
     allowedLibTypesInDomain: [],
     domainName: options.domainName,
     libType,

@@ -70,7 +70,7 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   );
   await libraryGenerator(tree, {
     buildable: true,
-    name: libType,
+    name: "test-" + libType,
     skipModule: true,
     directory: options.superDomainName + "/" + options.domainName,
     tags: Object.values(sourceTags).join(),

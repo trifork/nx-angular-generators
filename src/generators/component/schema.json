@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Feature",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "componentName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "pattern": "^(?!.*[/])(?!.*component).*$",
+      "x-prompt": "Input the name of the component, e.g. 'id-input'. Do not append with '.component' or '-component'.\n"
+    },
+    "superDomainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of the superDomain to which a component should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
+    },
+    "domainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the name of domain to which a component should be added. E.g. 'medicine'. Do not prepend with '/libs/' or superdomain name.\n"
+    },
+    "libName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 3
+      },
+      "pattern": "^(?!.*[/])(?!.*shared).*$",
+      "x-prompt": "Input the libname to which a component should be added. E.g. 'feature-login'. Do not prepend with '/libs/', superdomain name or domain name.\n"
+    }
+  },
+  "required": ["componentName"]
+}

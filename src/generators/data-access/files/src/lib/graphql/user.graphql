@@ -1,5 +1,7 @@
 query GetUserById($id: String!) {
   getUserById(id: $id) {
-    name
+    name {
+      given
+    }
   }
 }

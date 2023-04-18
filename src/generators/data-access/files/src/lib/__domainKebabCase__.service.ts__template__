@@ -11,7 +11,7 @@ import { GetUserByIdGQL } from './generated/user.generated';
 export class <%=domainPascalCase%>DataAccessService {
       constructor(public gql: GetUserByIdGQL) {}
 
-  public getUserById(id: number) {
+  public getUserById(id: string) {
     return this.gql.fetch({ id }).pipe(
       filter((response) => !response.loading),
       map((response) => response.data)

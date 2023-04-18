@@ -121,6 +121,12 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     normalizedOptions.projectName,
     projectConfiguration
   );
+  console.log(
+    "UPDATE: Project.json has been updated with new target generate-graphql"
+  );
+  console.log(
+    "To generate typescript models run 'yarn nx generate-graphql <libname>'"
+  );
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

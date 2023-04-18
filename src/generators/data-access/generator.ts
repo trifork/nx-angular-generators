@@ -6,6 +6,7 @@ import {
   names,
   offsetFromRoot,
   ProjectConfiguration,
+  readProjectConfiguration,
   Target,
   TargetConfiguration,
   Tree,
@@ -99,10 +100,13 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
       ],
     },
   };
-  const projectConfiguration: ProjectConfiguration = {
-    root: normalizedOptions.projectRoot,
-    targets: { "generate-graphql": targetConfiguration },
-  };
+  const projectConfiguration = readProjectConfiguration(
+    tree,
+    normalizedOptions.projectName
+  );
+  if (!projectConfiguration.hasOwnProperty("targets"))
+    projectConfiguration.targets = {};
+  projectConfiguration.targets!["generate-graphql"] = targetConfiguration;
   updateProjectConfiguration(
     tree,
     normalizedOptions.projectName,

@@ -89,29 +89,29 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
 
-  // Add graphql generation target
-  const targetConfiguration: TargetConfiguration = {
-    executor: "@nrwl/workspace:run-commands",
-    options: {
-      commands: [
-        {
-          command: 'yarn graphql-codegen --config="$CODEGEN_CONFIG_PATH"',
-        },
-      ],
-    },
-  };
-  const projectConfiguration = readProjectConfiguration(
-    tree,
-    normalizedOptions.projectName
-  );
-  if (!projectConfiguration.hasOwnProperty("targets"))
-    projectConfiguration.targets = {};
-  projectConfiguration.targets!["generate-graphql"] = targetConfiguration;
-  updateProjectConfiguration(
-    tree,
-    normalizedOptions.projectName,
-    projectConfiguration
-  );
+  //   // Add graphql generation target
+  //   const targetConfiguration: TargetConfiguration = {
+  //     executor: "@nrwl/workspace:run-commands",
+  //     options: {
+  //       commands: [
+  //         {
+  //           command: 'yarn graphql-codegen --config="$CODEGEN_CONFIG_PATH"',
+  //         },
+  //       ],
+  //     },
+  //   };
+  //   const projectConfiguration = readProjectConfiguration(
+  //     tree,
+  //     normalizedOptions.projectName
+  //   );
+  //   if (!projectConfiguration.hasOwnProperty("targets"))
+  //     projectConfiguration.targets = {};
+  //   projectConfiguration.targets!["generate-graphql"] = targetConfiguration;
+  //   updateProjectConfiguration(
+  //     tree,
+  //     normalizedOptions.projectName,
+  //     projectConfiguration
+  //   );
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

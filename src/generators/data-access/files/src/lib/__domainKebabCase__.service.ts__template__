@@ -12,7 +12,7 @@ export class <%=domainPascalCase%>DataAccessService {
       constructor(public gql: GetUserByIdGQL) {}
 
   public getUserById(id: number) {
-    return this.gql.fetch({ cpr }).pipe(
+    return this.gql.fetch({ id }).pipe(
       filter((response) => !response.loading),
       map((response) => response.data)
     );

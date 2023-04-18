@@ -102,6 +102,8 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     options: {
       commands: [
         {
+          // TODO: {projectRoot} used directly in command, is not supported
+          // might be in the future
           command: 'yarn graphql-codegen --config="$CODEGEN_CONFIG_PATH"',
         },
       ],

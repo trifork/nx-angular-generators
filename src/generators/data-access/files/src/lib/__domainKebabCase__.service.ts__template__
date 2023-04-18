@@ -1,6 +1,20 @@
 import { Injectable } from '@angular/core';
+import { filter, map } from 'rxjs';
+import { GetUserByIdGQL } from './generated/user.generated';
+
+// This example service needs generated code, make sure to run
+// yarn generate:graphql
 
 @Injectable({
   providedIn: 'root',
 })
-export class <%=domainPascalCase%>DataAccessService {}
+export class <%=domainPascalCase%>DataAccessService {
+      constructor(public gql: GetUserByIdGQL) {}
+
+  public getUserById(id: number) {
+    return this.gql.fetch({ cpr }).pipe(
+      filter((response) => !response.loading),
+      map((response) => response.data)
+    );
+  }
+}

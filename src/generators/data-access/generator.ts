@@ -5,7 +5,11 @@ import {
   getWorkspaceLayout,
   names,
   offsetFromRoot,
+  ProjectConfiguration,
+  Target,
+  TargetConfiguration,
   Tree,
+  updateProjectConfiguration,
 } from "@nrwl/devkit";
 import * as path from "path";
 import { formatCapitalizations, kebabify } from "../../utils/naming";
@@ -83,6 +87,27 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   // Add template files
   const normalizedOptions = normalizeOptions(tree, options);
   addFiles(tree, normalizedOptions);
+
+  // Add graphql generation target
+  const targetConfiguration: TargetConfiguration = {
+    executor: "@nrwl/workspace:run-commands",
+    options: {
+      commands: [
+        {
+          command: 'yarn graphql-codegen --config="$CODEGEN_CONFIG_PATH"',
+        },
+      ],
+    },
+  };
+  const projectConfiguration: ProjectConfiguration = {
+    root: normalizedOptions.projectRoot,
+    targets: { "generate-graphql": targetConfiguration },
+  };
+  updateProjectConfiguration(
+    tree,
+    normalizedOptions.projectName,
+    projectConfiguration
+  );
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

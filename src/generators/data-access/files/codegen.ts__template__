@@ -1,16 +1,15 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
+// TODO: make more generic if opensource
 const config: CodegenConfig = {
   schema: "../shared/schema/graphql/schema.graphqls",
-  // documents: './libs/**/schema.graphql',
-  documents:
-    "libs/diabetes/admin/data-access/src/lib/graphql/whitelist.graphql",
+  documents: "<%=projectRoot%>/src/lib/graphql/whitelist.graphql",
   generates: {
     "libs/diabetes/shared/api/data-access/src/lib/generated/api-schema-types.generated.ts":
       {
         plugins: ["typescript"],
       },
-    "libs/diabetes/admin/data-access/src/lib/generated/": {
+    "<%=projectRoot%>/src/lib/generated/": {
       preset: "near-operation-file",
       presetConfig: {
         extension: ".generated.ts",

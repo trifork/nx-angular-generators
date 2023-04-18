@@ -22,7 +22,6 @@
         "$source": "argv",
         "index": 1
       },
-      "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of the superDomain to which a component should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
     },
     "domainName": {
@@ -42,7 +41,6 @@
         "$source": "argv",
         "index": 3
       },
-      "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the libname to which a component should be added. E.g. 'feature-login'. Do not prepend with '/libs/', superdomain name or domain name.\n"
     }
   },

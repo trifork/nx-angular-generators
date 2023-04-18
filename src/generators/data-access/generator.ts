@@ -5,7 +5,12 @@ import {
   getWorkspaceLayout,
   names,
   offsetFromRoot,
+  ProjectConfiguration,
+  readProjectConfiguration,
+  Target,
+  TargetConfiguration,
   Tree,
+  updateProjectConfiguration,
 } from "@nrwl/devkit";
 import * as path from "path";
 import { formatCapitalizations, kebabify } from "../../utils/naming";
@@ -26,7 +31,9 @@ function normalizeOptions(
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     options.domainName
   )}/${kebabify(libType)}`;
-  const projectName = libType;
+  // This will not be the actual project name in project.json
+  // the ladder will be prepended with <superdomaian>-<domain>-
+  const projectName = kebabify(libType);
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
   return {
@@ -67,7 +74,8 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory: options.superDomainName + "/" + options.domainName,
+    directory:
+      kebabify(options.superDomainName) + "/" + kebabify(options.domainName),
     tags: Object.values(sourceTags).join(),
   });
 
@@ -82,7 +90,43 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
 
   // Add template files
   const normalizedOptions = normalizeOptions(tree, options);
+  const projectJSONNameField = `${kebabify(options.superDomainName)}-${kebabify(
+    options.domainName
+  )}-${normalizedOptions.projectName}`;
+  // TODO: after unit testing is implemented, try and clean up naming variables
   addFiles(tree, normalizedOptions);
+
+  // Add graphql generation target
+  const targetConfiguration: TargetConfiguration = {
+    executor: "@nrwl/workspace:run-commands",
+    options: {
+      commands: [
+        {
+          // TODO: {projectRoot} used directly in command, is not supported
+          // might be in the future
+          command: 'yarn graphql-codegen --config="$CODEGEN_CONFIG_PATH"',
+        },
+      ],
+    },
+  };
+  const projectConfiguration = readProjectConfiguration(
+    tree,
+    projectJSONNameField
+  );
+  if (!projectConfiguration.hasOwnProperty("targets"))
+    projectConfiguration.targets = {};
+  projectConfiguration.targets!["generate-graphql"] = targetConfiguration;
+  updateProjectConfiguration(
+    tree,
+    normalizedOptions.projectName,
+    projectConfiguration
+  );
+  console.log(
+    "UPDATE: Project.json has been updated with new target generate-graphql"
+  );
+  console.log(
+    "To generate typescript models run 'yarn nx generate-graphql <libname>'"
+  );
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

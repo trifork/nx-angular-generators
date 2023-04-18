@@ -3,7 +3,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 // TODO: make more generic if opensource
 const config: CodegenConfig = {
   schema: "../shared/schema/graphql/schema.graphqls",
-  documents: "<%=projectRoot%>/src/lib/graphql/whitelist.graphql",
+  documents: "<%=projectRoot%>/src/lib/graphql/user.graphql",
   generates: {
     "libs/diabetes/shared/api/models/src/lib/generated/api-schema-types.generated.ts":
       {

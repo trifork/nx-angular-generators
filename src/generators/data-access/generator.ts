@@ -33,7 +33,7 @@ function normalizeOptions(
   )}/${kebabify(libType)}`;
   // This will not be the actual project name in project.json
   // the ladder will be prepended with <superdomaian>-<domain>-
-  const projectName = libType;
+  const projectName = kebabify(libType);
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
   return {
@@ -93,6 +93,7 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   const projectJSONNameField = `${kebabify(options.superDomainName)}-${kebabify(
     options.domainName
   )}-${normalizedOptions.projectName}`;
+  // TODO: after unit testing is implemented, try and clean up naming variables
   addFiles(tree, normalizedOptions);
 
   // Add graphql generation target

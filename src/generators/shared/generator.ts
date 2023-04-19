@@ -1,4 +1,4 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
+import { libraryGenerator } from '@nrwl/angular/generators';
 import {
   formatFiles,
   generateFiles,
@@ -6,13 +6,13 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from "@nrwl/devkit";
-import * as path from "path";
-import { kebabify } from "../../utils/naming";
-import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
-import { generateSourceTagsShared, tagsGenerator } from "../tags/generator";
-import { TagsGeneratorOptionsShared } from "../tags/generator.model";
-import { SharedGeneratorSchema } from "./schema";
+} from '@nrwl/devkit';
+import * as path from 'path';
+import { kebabify } from '../../utils/naming';
+import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
+import { generateSourceTagsShared, tagsGenerator } from '../tags/generator';
+import { TagsGeneratorOptionsShared } from '../tags/generator.model';
+import { SharedGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends SharedGeneratorSchema {
   projectName: string;
@@ -20,13 +20,10 @@ interface NormalizedSchema extends SharedGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: SharedGeneratorSchema
-): NormalizedSchema {
-  const projectDirectory = `${options.superDomainName}/${kebabify(
-    domainName
-  )}/${options.subDomainName}/${options.libName}`;
+function normalizeOptions(tree: Tree, options: SharedGeneratorSchema): NormalizedSchema {
+  const projectDirectory = `${options.superDomainName}/${kebabify(domainName)}/${
+    options.subDomainName
+  }/${options.libName}`;
   const projectName = options.libName;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
@@ -44,17 +41,17 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(options.libName),
     fileName: options.projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: "",
+    template: '',
   };
   generateFiles(
     tree,
-    path.join(__dirname, "files"),
+    path.join(__dirname, 'files'),
     options.projectRoot,
     templateOptions
   );
 }
 
-const domainName = "shared";
+const domainName = 'shared';
 
 export default async function (tree: Tree, options: SharedGeneratorSchema) {
   // Generate standard lib
@@ -75,8 +72,8 @@ export default async function (tree: Tree, options: SharedGeneratorSchema) {
   // Parse optional allowed subdomains provided by user
   const allowedSubDomainsUserInputKebab: string[] = options.allowedSubDomains
     ? options.allowedSubDomains
-        .split(",")
-        .map((str) => str.replace(" ", ""))
+        .split(',')
+        .map((str) => str.replace(' ', ''))
         .map((str) => kebabify(str))
     : [];
 
@@ -84,9 +81,9 @@ export default async function (tree: Tree, options: SharedGeneratorSchema) {
   const tagsGeneratorOptions: TagsGeneratorOptionsShared = {
     ...options,
     allowedSubDomainsInShared: [
-      "util",
-      "models",
-      "api-models",
+      'util',
+      'models',
+      'api-models',
       ...allowedSubDomainsUserInputKebab,
     ],
     domainName,

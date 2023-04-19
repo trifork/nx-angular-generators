@@ -11,7 +11,7 @@ export interface TagsGeneratorOptionsGeneric {
 
 export interface TagsGeneratorOptionsShared {
   superDomainName: string;
-  domainName: "shared";
+  domainName: 'shared';
   subDomainName: string;
   libName: string;
   allowedSubDomainsInShared: string[];
@@ -20,7 +20,7 @@ export interface TagsGeneratorOptionsShared {
 export function isShared(
   options: TagsGeneratorOptionsShared | TagsGeneratorOptionsGeneric
 ): options is TagsGeneratorOptionsShared {
-  return (options as TagsGeneratorOptionsShared).domainName === "shared";
+  return (options as TagsGeneratorOptionsShared).domainName === 'shared';
 }
 
 // Tag helpers
@@ -39,13 +39,7 @@ export interface SourceTagCollectionShared {
 }
 
 // Types for other libs in the same domain (except special-case: shared)
-export type LibTypesStr =
-  | "ui"
-  | "util"
-  | "state"
-  | "data_access"
-  | "models"
-  | "feature";
+export type LibTypesStr = 'ui' | 'util' | 'state' | 'data_access' | 'models' | 'feature';
 export type AllowedLibsInDomainTagCollection = {
   // lib-type: domain-lib-tag-combination
   [lib in LibTypesStr]: string;

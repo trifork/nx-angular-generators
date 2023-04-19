@@ -38,6 +38,18 @@
       "schema": "./src/generators/feature/schema.json",
       "description": "feature generator"
     },
+    "component": {
+      "factory": "./src/generators/component/generator",
+      "schema": "./src/generators/component/schema.json",
+      "description": "component generator",
+      "aliases": ["c"]
+    },
+    "component-minimal-interactive": {
+      "factory": "./src/generators/component-minimal-interactive/generator",
+      "schema": "./src/generators/component-minimal-interactive/schema.json",
+      "description": "component generator minimal interactive",
+      "aliases": ["tc"]
+    },
     "ui": {
       "factory": "./src/generators/ui/generator",
       "schema": "./src/generators/ui/schema.json",

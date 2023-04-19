@@ -13,12 +13,10 @@ export class Substore2Effects {
     this.actions$.pipe(
       ofType(actions.getData),
       concatMap((action) =>
-        this.http
-          .get(`https://www.google.com/search?q=${action.requestPayload}`)
-          .pipe(
-            map((response) => actions.getDataSuccess({ data: 'Data' })),
-            catchError(() => of(actions.getDataFailure()))
-          )
+        this.http.get(`https://www.google.com/search?q=${action.requestPayload}`).pipe(
+          map((response) => actions.getDataSuccess({ data: 'Data' })),
+          catchError(() => of(actions.getDataFailure()))
+        )
       )
     )
   );

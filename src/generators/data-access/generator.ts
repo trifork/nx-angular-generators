@@ -1,4 +1,4 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
+import { libraryGenerator } from '@nrwl/angular/generators';
 import {
   formatFiles,
   generateFiles,
@@ -11,12 +11,12 @@ import {
   TargetConfiguration,
   Tree,
   updateProjectConfiguration,
-} from "@nrwl/devkit";
-import * as path from "path";
-import { formatCapitalizations, kebabify } from "../../utils/naming";
-import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
-import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
-import { DataAccessGeneratorSchema } from "./schema";
+} from '@nrwl/devkit';
+import * as path from 'path';
+import { formatCapitalizations, kebabify } from '../../utils/naming';
+import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
+import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { DataAccessGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends DataAccessGeneratorSchema {
   projectName: string;
@@ -51,17 +51,17 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(libType),
     fileName: options.projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: "",
+    template: '',
   };
   generateFiles(
     tree,
-    path.join(__dirname, "files"),
+    path.join(__dirname, 'files'),
     options.projectRoot,
     templateOptions
   );
 }
 
-const libType = "data_access";
+const libType = 'data_access';
 
 export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   // Generate standard lib
@@ -74,16 +74,15 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory:
-      kebabify(options.superDomainName) + "/" + kebabify(options.domainName),
+    directory: kebabify(options.superDomainName) + '/' + kebabify(options.domainName),
     tags: Object.values(sourceTags).join(),
   });
 
   // Update tags and set rules
   await tagsGenerator(tree, {
     superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ["util", "auth", "api"],
-    allowedLibTypesInDomain: ["util", "models"],
+    allowedSubDomainsInShared: ['util', 'auth', 'api'],
+    allowedLibTypesInDomain: ['util', 'models'],
     domainName: options.domainName,
     libType,
   });
@@ -98,7 +97,7 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
 
   // Add graphql generation target
   const targetConfiguration: TargetConfiguration = {
-    executor: "@nrwl/workspace:run-commands",
+    executor: '@nrwl/workspace:run-commands',
     options: {
       commands: [
         {
@@ -109,24 +108,12 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
       ],
     },
   };
-  const projectConfiguration = readProjectConfiguration(
-    tree,
-    projectJSONNameField
-  );
-  if (!projectConfiguration.hasOwnProperty("targets"))
-    projectConfiguration.targets = {};
-  projectConfiguration.targets!["generate-graphql"] = targetConfiguration;
-  updateProjectConfiguration(
-    tree,
-    normalizedOptions.projectName,
-    projectConfiguration
-  );
-  console.log(
-    "UPDATE: Project.json has been updated with new target generate-graphql"
-  );
-  console.log(
-    "To generate typescript models run 'yarn nx generate-graphql <libname>'"
-  );
+  const projectConfiguration = readProjectConfiguration(tree, projectJSONNameField);
+  if (!projectConfiguration.hasOwnProperty('targets')) projectConfiguration.targets = {};
+  projectConfiguration.targets!['generate-graphql'] = targetConfiguration;
+  updateProjectConfiguration(tree, normalizedOptions.projectName, projectConfiguration);
+  console.log('UPDATE: Project.json has been updated with new target generate-graphql');
+  console.log("To generate typescript models run 'yarn nx generate-graphql <libname>'");
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

@@ -1,12 +1,7 @@
 {
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -15,9 +10,7 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               },
               {
                 "sourceTag": "scope:diabetes-medicine-state",
@@ -27,6 +20,14 @@
                   "scope:diabetes-medicine-util",
                   "scope:diabetes-shared-auth",
                   "scope:diabetes-shared-data-access"
+                ]
+              },
+              {
+                "sourceTag": "scope:diabetes-shared-subtest-libtest",
+                "onlyDependOnLibsWithTags": [
+                  "scope:diabetes-shared-util",
+                  "scope:diabetes-shared-models",
+                  "scope:diabetes-shared-api-models"
                 ]
               }
             ]

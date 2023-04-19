@@ -42,7 +42,7 @@
       "factory": "./src/generators/component/generator",
       "schema": "./src/generators/component/schema.json",
       "description": "component generator",
-      "aliases": ["c"]
+      "aliases": ["c", "tc"]
     },
     "ui": {
       "factory": "./src/generators/ui/generator",

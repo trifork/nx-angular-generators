@@ -12,8 +12,8 @@
         "$source": "argv",
         "index": 0
       },
-      "pattern": "^(?!.*[/])(?!.*component).*$",
-      "x-prompt": "Input the name of the component, e.g. 'id-input'. Do not append with '.component' or '-component'.\n"
+      "pattern": "^(?!.*[/])(?!.*[Cc]omponent).*$",
+      "x-prompt": "Input the name of the component, e.g. 'id-input'. Do not append with '.component' '-component' or 'Component'.\n"
     }
   },
   "required": ["componentName"]

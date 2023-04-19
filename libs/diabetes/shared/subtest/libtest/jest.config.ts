@@ -3,8 +3,7 @@ export default {
   displayName: 'diabetes-shared-subtest-libtest',
   preset: '../../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory:
-    '../../../../../coverage/libs/diabetes/shared/subtest/libtest',
+  coverageDirectory: '../../../../../coverage/libs/diabetes/shared/subtest/libtest',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

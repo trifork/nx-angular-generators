@@ -4,15 +4,13 @@ import {
   combineReducers,
   createFeatureSelector,
 } from '@ngrx/store';
-import {
-  substore2Reducer,
-  Substore2State,
-} from './substore2/substore2.reducer';
+import { substore2Reducer, Substore2State } from './substore2/substore2.reducer';
 
 export const MEDICINE_DOMAIN_FEATURE_KEY = 'Medicine';
 
-export const MedicineDomainSelector =
-  createFeatureSelector<MedicineDomainState>(MEDICINE_DOMAIN_FEATURE_KEY);
+export const MedicineDomainSelector = createFeatureSelector<MedicineDomainState>(
+  MEDICINE_DOMAIN_FEATURE_KEY
+);
 
 // Type used to enforce correlation
 // between state type and reducer combination,

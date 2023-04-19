@@ -1,4 +1,4 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
+import { libraryGenerator } from '@nrwl/angular/generators';
 import {
   formatFiles,
   generateFiles,
@@ -6,12 +6,12 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from "@nrwl/devkit";
-import * as path from "path";
-import { formatCapitalizations, kebabify } from "../../utils/naming";
-import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
-import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
-import { UtilGeneratorSchema } from "./schema";
+} from '@nrwl/devkit';
+import * as path from 'path';
+import { formatCapitalizations, kebabify } from '../../utils/naming';
+import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
+import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { UtilGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends UtilGeneratorSchema {
   projectName: string;
@@ -19,10 +19,7 @@ interface NormalizedSchema extends UtilGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: UtilGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: UtilGeneratorSchema): NormalizedSchema {
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     options.domainName
   )}/${libType}`;
@@ -44,17 +41,17 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     fileName: options.projectName,
     ...formatCapitalizations(options.domainName, true),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: "",
+    template: '',
   };
   generateFiles(
     tree,
-    path.join(__dirname, "files"),
+    path.join(__dirname, 'files'),
     options.projectRoot,
     templateOptions
   );
 }
 
-const libType = "util";
+const libType = 'util';
 
 export default async function (tree: Tree, options: UtilGeneratorSchema) {
   // Generate standard lib
@@ -67,15 +64,15 @@ export default async function (tree: Tree, options: UtilGeneratorSchema) {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory: options.superDomainName + "/" + options.domainName,
+    directory: options.superDomainName + '/' + options.domainName,
     tags: Object.values(sourceTags).join(),
   });
 
   // Update tags and set rules
   await tagsGenerator(tree, {
     superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ["util", "api-models", "models"],
-    allowedLibTypesInDomain: ["models"],
+    allowedSubDomainsInShared: ['util', 'api-models', 'models'],
+    allowedLibTypesInDomain: ['models'],
     domainName: options.domainName,
     libType,
   });

@@ -57,11 +57,9 @@ function normalizeOptions(
   options: CompleteOptionsGeneric | CompleteOptionsShared
 ): NormalizedSchema {
   const { domainName, libName, superDomainName } = options;
-  const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
-    domainName
-  )}${isSharedOptions(options) ? '/' + kebabify(options.subDomainName) : ''}/${
-    options.libName
-  }`;
+  const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(domainName)}${
+    isSharedOptions(options) ? '/' + kebabify(options.subDomainName) : ''
+  }/${options.libName}`;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
   const projectName = isSharedOptions(options)
     ? `${superDomainName}-${domainName}-${options.subDomainName}-${libName}`
@@ -187,9 +185,7 @@ function addExport(
   const oldIndexTS = tree.read(path)!.toString();
   const newIndexTS = `${oldIndexTS}\nexport * from './${
     completeOptions.cwdOffsetFromProject?.split('src/')[1]
-  }/${completeOptions.componentName}/${
-    completeOptions.componentName
-  }.component'`;
+  }/${completeOptions.componentName}/${completeOptions.componentName}.component'`;
   tree.write(path, newIndexTS);
 }
 
@@ -218,8 +214,7 @@ export default async function (
     completeOptions = {
       ...(options as Required<ComponentGeneratorSchema>),
       cwdOffsetFromProject: null,
-      componentOutPutRelativeToProject:
-        '/src/lib/components/' + options.componentName,
+      componentOutPutRelativeToProject: '/src/lib/components/' + options.componentName,
     };
   }
 

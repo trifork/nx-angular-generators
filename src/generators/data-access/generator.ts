@@ -74,8 +74,7 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory:
-      kebabify(options.superDomainName) + '/' + kebabify(options.domainName),
+    directory: kebabify(options.superDomainName) + '/' + kebabify(options.domainName),
     tags: Object.values(sourceTags).join(),
   });
 
@@ -109,24 +108,12 @@ export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
       ],
     },
   };
-  const projectConfiguration = readProjectConfiguration(
-    tree,
-    projectJSONNameField
-  );
-  if (!projectConfiguration.hasOwnProperty('targets'))
-    projectConfiguration.targets = {};
+  const projectConfiguration = readProjectConfiguration(tree, projectJSONNameField);
+  if (!projectConfiguration.hasOwnProperty('targets')) projectConfiguration.targets = {};
   projectConfiguration.targets!['generate-graphql'] = targetConfiguration;
-  updateProjectConfiguration(
-    tree,
-    normalizedOptions.projectName,
-    projectConfiguration
-  );
-  console.log(
-    'UPDATE: Project.json has been updated with new target generate-graphql'
-  );
-  console.log(
-    "To generate typescript models run 'yarn nx generate-graphql <libname>'"
-  );
+  updateProjectConfiguration(tree, normalizedOptions.projectName, projectConfiguration);
+  console.log('UPDATE: Project.json has been updated with new target generate-graphql');
+  console.log("To generate typescript models run 'yarn nx generate-graphql <libname>'");
 
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);

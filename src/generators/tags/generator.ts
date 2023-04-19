@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { readJsonFile, Tree, writeJsonFile } from "@nrwl/devkit";
-import { kebabify } from "../../utils/naming";
+import { readJsonFile, Tree, writeJsonFile } from '@nrwl/devkit';
+import { kebabify } from '../../utils/naming';
 import {
   AllowedLibsInDomainTagCollection,
   isShared as isSharedDomainOptions,
@@ -8,11 +8,8 @@ import {
   SourceTagCollectionShared,
   TagsGeneratorOptionsGeneric,
   TagsGeneratorOptionsShared,
-} from "./generator.model";
-import {
-  eslintJSON,
-  moduleBoundsRuleConfig,
-} from "src/utils/changeEslintPrefix";
+} from './generator.model';
+import { eslintJSON, moduleBoundsRuleConfig } from 'src/utils/changeEslintPrefix';
 
 // Tags to be set on the lib itself (package.json)
 export function generateSourceTagsGeneric(
@@ -23,9 +20,7 @@ export function generateSourceTagsGeneric(
 ): SourceTagCollectionGeneric {
   const returnVar: SourceTagCollectionGeneric = {
     superDomain: `scope:${kebabify(superDomainName)}`,
-    superDomainAndDomain: `scope:${kebabify(superDomainName)}-${kebabify(
-      domainName
-    )}`,
+    superDomainAndDomain: `scope:${kebabify(superDomainName)}-${kebabify(domainName)}`,
     superDomainDomainAndLib: `scope:${kebabify(superDomainName)}-${kebabify(
       domainName
     )}-${kebabify(libType)}`,
@@ -38,21 +33,19 @@ export function generateSourceTagsGeneric(
 }
 export function generateSourceTagsShared(
   superDomain: string,
-  domainName: "shared",
+  domainName: 'shared',
   subDomainName: string,
   libName: string
 ): SourceTagCollectionShared {
   return {
     superDomain: `scope:${kebabify(superDomain)}`,
-    superDomainAndDomain: `scope:${kebabify(superDomain)}-${kebabify(
-      domainName
-    )}`,
+    superDomainAndDomain: `scope:${kebabify(superDomain)}-${kebabify(domainName)}`,
     superDomainDomainAndSubDomain: `scope:${kebabify(superDomain)}-${kebabify(
       domainName
     )}-${kebabify(subDomainName)}`,
-    superDomainDomainSubDomainAndName: `scope:${kebabify(
-      superDomain
-    )}-${kebabify(domainName)}-${kebabify(subDomainName)}-${kebabify(libName)}`,
+    superDomainDomainSubDomainAndName: `scope:${kebabify(superDomain)}-${kebabify(
+      domainName
+    )}-${kebabify(subDomainName)}-${kebabify(libName)}`,
   };
 }
 
@@ -83,21 +76,19 @@ function generateAllowedTagCombinations(
   // Construct shared tags, add all of shared, if specified in options
   const sharedTagsAllowed: string[] =
     !isSharedDomainOptions(options) && options.allOfSharedAllowed
-      ? [options.superDomainName + "-shared"]
+      ? [options.superDomainName + '-shared']
       : [];
   options.allowedSubDomainsInShared.forEach((subdomain) => {
-    const domain = "shared";
+    const domain = 'shared';
     const superDomain = options.superDomainName;
     const subDomainKebab = kebabify(subdomain);
     sharedTagsAllowed.push(`${superDomain}-${domain}-${subDomainKebab}`);
   });
-  return [...sameDomainTagsAllowed, ...sharedTagsAllowed].map(
-    (tag) => `scope:${tag}`
-  );
+  return [...sameDomainTagsAllowed, ...sharedTagsAllowed].map((tag) => `scope:${tag}`);
 }
 
 export default async function () {
-  throw new Error("Should not be called from CLI");
+  throw new Error('Should not be called from CLI');
 }
 
 // Partial types for the JSON imported from .eslintrc.json
@@ -107,8 +98,7 @@ export async function tagsGenerator(
   options: TagsGeneratorOptionsGeneric | TagsGeneratorOptionsShared
 ) {
   // Detect dry run
-  const dryRun =
-    process.argv.includes("--dryRun") || process.argv.includes("--dry-run");
+  const dryRun = process.argv.includes('--dryRun') || process.argv.includes('--dry-run');
 
   // Generate source tags
   let mostSpecificSourceTag: string;
@@ -120,8 +110,7 @@ export async function tagsGenerator(
       options.subDomainName,
       options.libName
     );
-    mostSpecificSourceTag =
-      sourceTagsCollection.superDomainDomainSubDomainAndName;
+    mostSpecificSourceTag = sourceTagsCollection.superDomainDomainSubDomainAndName;
   } else {
     const sourceTagsCollection = generateSourceTagsGeneric(
       options.superDomainName,
@@ -146,17 +135,14 @@ export async function tagsGenerator(
 
     const overrides = existingEslintConfig.overrides;
     const tsOverrideObjs = overrides?.filter((overrideObj) => {
-      return "@nrwl/nx/enforce-module-boundaries" in overrideObj.rules;
+      return '@nrwl/nx/enforce-module-boundaries' in overrideObj.rules;
     });
     if (!Array.isArray(tsOverrideObjs) || tsOverrideObjs.length !== 1)
-      throw new Error(
-        "More or less than one ts override obj. in root eslintrc.json"
-      );
+      throw new Error('More or less than one ts override obj. in root eslintrc.json');
     const tsOverrideObj = tsOverrideObjs[0];
-    const moduleBounds =
-      tsOverrideObj.rules["@nrwl/nx/enforce-module-boundaries"];
+    const moduleBounds = tsOverrideObj.rules['@nrwl/nx/enforce-module-boundaries'];
     if (!moduleBounds)
-      throw new Error("Could not find module rules in root eslintrc.json");
+      throw new Error('Could not find module rules in root eslintrc.json');
     const existingDepConstraints = moduleBounds[1].depConstraints;
 
     // Generate new rules
@@ -165,7 +151,7 @@ export async function tagsGenerator(
       onlyDependOnLibsWithTags: Object.values(allowedTags),
     };
     const newBounds: moduleBoundsRuleConfig = [
-      "error",
+      'error',
       {
         allow: [],
         depConstraints:
@@ -186,11 +172,11 @@ export async function tagsGenerator(
     }
 
     // Mutate eslint object
-    tsOverrideObj.rules["@nrwl/nx/enforce-module-boundaries"] = newBounds;
+    tsOverrideObj.rules['@nrwl/nx/enforce-module-boundaries'] = newBounds;
 
     // Overwrite old .eslintrc.json
     if (!dryRun) writeJsonFile(eslintPath, existingEslintConfig);
   } catch (err) {
-    console.error("Error setting dependency rules in lib", err);
+    console.error('Error setting dependency rules in lib', err);
   }
 }

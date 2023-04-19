@@ -3,11 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/diabetes/medicine/state/src",
   "prefix": "example",
-  "tags": [
-    "scope:diabetes",
-    "scope:diabetes-medicine",
-    "scope:diabetes-medicine-state"
-  ],
+  "tags": ["scope:diabetes", "scope:diabetes-medicine", "scope:diabetes-medicine-state"],
   "projectType": "library",
   "targets": {
     "build": {

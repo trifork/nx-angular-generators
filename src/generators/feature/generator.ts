@@ -1,14 +1,14 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
-import { formatFiles, getWorkspaceLayout, Tree } from "@nrwl/devkit";
+import { libraryGenerator } from '@nrwl/angular/generators';
+import { formatFiles, getWorkspaceLayout, Tree } from '@nrwl/devkit';
 import {
   scssGenerator,
   configurationGenerator as stylelintConfigGenerator,
-} from "nx-stylelint";
-import { kebabify } from "../../utils/naming";
-import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
-import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
-import { FeatureGeneratorSchema } from "./schema";
-import { changeEslintPrefix } from "../../utils/changeEslintPrefix";
+} from 'nx-stylelint';
+import { kebabify } from '../../utils/naming';
+import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
+import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { FeatureGeneratorSchema } from './schema';
+import { changeEslintPrefix } from '../../utils/changeEslintPrefix';
 
 interface NormalizedSchema extends FeatureGeneratorSchema {
   projectName: string;
@@ -16,10 +16,7 @@ interface NormalizedSchema extends FeatureGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: FeatureGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: FeatureGeneratorSchema): NormalizedSchema {
   const { domainName, featureName } = options;
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     domainName
@@ -35,7 +32,7 @@ function normalizeOptions(
   };
 }
 
-const libType = "feature";
+const libType = 'feature';
 
 export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
@@ -59,9 +56,9 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     routing: true,
     lazy: true,
     displayBlock: true,
-    style: "scss",
+    style: 'scss',
     simpleName: true,
-    directory: superDomainName + "/" + domainName,
+    directory: superDomainName + '/' + domainName,
     tags: Object.values(sourceTags).join(),
   });
 
@@ -69,7 +66,7 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   await stylelintConfigGenerator(tree, {
     project: fullResultingProjectName,
     skipFormat: false,
-    formatter: "string",
+    formatter: 'string',
   });
 
   // Generate scss
@@ -81,9 +78,9 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   // Update tags and set rules
   await tagsGenerator(tree, {
     superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ["api-models"],
+    allowedSubDomainsInShared: ['api-models'],
     allOfSharedAllowed: true,
-    allowedLibTypesInDomain: ["models", "state", "ui", "util"],
+    allowedLibTypesInDomain: ['models', 'state', 'ui', 'util'],
     domainName,
     libType,
     libName: featureName,

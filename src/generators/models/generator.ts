@@ -1,4 +1,4 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
+import { libraryGenerator } from '@nrwl/angular/generators';
 import {
   formatFiles,
   generateFiles,
@@ -6,12 +6,12 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from "@nrwl/devkit";
-import * as path from "path";
-import { formatCapitalizations, kebabify } from "../../utils/naming";
-import { pruneCompilerOptions } from "../../utils/pruneCompilerOptions";
-import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
-import { ModelsGeneratorSchema } from "./schema";
+} from '@nrwl/devkit';
+import * as path from 'path';
+import { formatCapitalizations, kebabify } from '../../utils/naming';
+import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
+import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { ModelsGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ModelsGeneratorSchema {
   projectName: string;
@@ -19,10 +19,7 @@ interface NormalizedSchema extends ModelsGeneratorSchema {
   projectDirectory: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: ModelsGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: ModelsGeneratorSchema): NormalizedSchema {
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     options.domainName
   )}/${libType}`;
@@ -44,17 +41,17 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...formatCapitalizations(options.domainName, true),
     fileName: options.projectName,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: "",
+    template: '',
   };
   generateFiles(
     tree,
-    path.join(__dirname, "files"),
+    path.join(__dirname, 'files'),
     options.projectRoot,
     templateOptions
   );
 }
 
-const libType = "models";
+const libType = 'models';
 
 export default async function (tree: Tree, options: ModelsGeneratorSchema) {
   // Generate standard lib
@@ -67,14 +64,14 @@ export default async function (tree: Tree, options: ModelsGeneratorSchema) {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory: options.superDomainName + "/" + options.domainName,
+    directory: options.superDomainName + '/' + options.domainName,
     tags: Object.values(sourceTags).join(),
   });
 
   // Update tags and set rules
   await tagsGenerator(tree, {
     superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ["api-models", "models"],
+    allowedSubDomainsInShared: ['api-models', 'models'],
     allowedLibTypesInDomain: [],
     domainName: options.domainName,
     libType,

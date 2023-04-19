@@ -1,0 +1,55 @@
+{
+  "name": "diabetes-shared-subtest-libtest",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/diabetes/shared/subtest/libtest/src",
+  "prefix": "example",
+  "tags": [
+    "scope:diabetes",
+    "scope:diabetes-shared",
+    "scope:diabetes-shared-subtest",
+    "scope:diabetes-shared-subtest-libtest"
+  ],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/diabetes/shared/subtest/libtest/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/diabetes/shared/subtest/libtest/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/diabetes/shared/subtest/libtest/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/diabetes/shared/subtest/libtest/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/diabetes/shared/subtest/libtest/**/*.ts",
+          "libs/diabetes/shared/subtest/libtest/**/*.html"
+        ]
+      }
+    }
+  }
+}

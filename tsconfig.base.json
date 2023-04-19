@@ -4,9 +4,10 @@
       "@trifork/diabetes/medicine/state": [
         "libs/diabetes/medicine/state/src/index.ts"
       ],
-      "@trifork/nx-angular-generators": [
-        "./*"
-      ]
+      "@trifork/diabetes/shared/subtest/libtest": [
+        "libs/diabetes/shared/subtest/libtest/src/index.ts"
+      ],
+      "@trifork/nx-angular-generators": ["./*"]
     }
   }
 }

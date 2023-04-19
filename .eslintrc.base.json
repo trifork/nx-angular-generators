@@ -28,6 +28,14 @@
                   "scope:diabetes-shared-auth",
                   "scope:diabetes-shared-data-access"
                 ]
+              },
+              {
+                "sourceTag": "scope:diabetes-shared-subtest-libtest",
+                "onlyDependOnLibsWithTags": [
+                  "scope:diabetes-shared-util",
+                  "scope:diabetes-shared-models",
+                  "scope:diabetes-shared-api-models"
+                ]
               }
             ]
           }

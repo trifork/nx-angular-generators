@@ -41,7 +41,8 @@
     "component": {
       "factory": "./src/generators/component/generator",
       "schema": "./src/generators/component/schema.json",
-      "description": "component generator"
+      "description": "component generator",
+      "aliases": ["c"]
     },
     "ui": {
       "factory": "./src/generators/ui/generator",

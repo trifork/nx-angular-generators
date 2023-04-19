@@ -1,4 +1,4 @@
-import { libraryGenerator } from "@nrwl/angular/generators";
+import { componentGenerator, libraryGenerator } from "@nrwl/angular/generators";
 import {
   formatFiles,
   generateFiles,
@@ -19,42 +19,35 @@ import { generateSourceTagsGeneric, tagsGenerator } from "../tags/generator";
 import { FeatureGeneratorSchema } from "./schema";
 import { changeEslintPrefix } from "../../utils/changeEslintPrefix";
 import path = require("path");
+import { Schema } from "@nrwl/angular/src/generators/component/schema";
 
-interface NormalizedSchema extends Required<FeatureGeneratorSchema> {
+interface CompleteOptions extends Required<FeatureGeneratorSchema> {
+  offsetFromProject: string;
+}
+
+interface NormalizedSchema extends CompleteOptions {
+  projectName: string;
   projectRoot: string;
   projectDirectory: string;
 }
 
 function normalizeOptions(
   tree: Tree,
-  options: Required<FeatureGeneratorSchema>,
-  offsetFromProject: String
+  options: CompleteOptions
 ): NormalizedSchema {
-  const { domainName, componentName, libName, superDomainName } = options;
+  const { domainName, libName, superDomainName } = options;
   const projectDirectory = `${kebabify(options.superDomainName)}/${kebabify(
     domainName
   )}/${options.libName}`;
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
+  const projectName = `${superDomainName}-${domainName}-${libName}`;
 
   return {
     ...options,
+    projectName,
     projectRoot,
     projectDirectory,
   };
-}
-
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: "",
-  };
-  generateFiles(
-    tree,
-    path.join(__dirname, "files"),
-    options.projectRoot,
-    templateOptions
-  );
 }
 
 function optionsAreComplete(options: FeatureGeneratorSchema) {
@@ -79,6 +72,19 @@ function getLibFromPath(path: string) {
   return lib;
 }
 
+function getProjectOffsetFromPath(path: string) {
+  let offset = "";
+  const lib = getLibFromPath(path);
+  try {
+    offset = path.split(workspaceRoot)[1].split(lib)[1].substring(1);
+  } catch {
+    // eslint-disable-next-line no-console
+    console.log("Could not get project offset, defaulting to ''");
+  }
+  console.log("Derived project offset from working directory: ", offset);
+  return offset;
+}
+
 function parseStructureFromWorkingDirectory() {
   if (process.env["INIT_CWD"] === undefined || process.env["INIT_CWD"] === "")
     throw new Error("Can not find component out path");
@@ -90,36 +96,46 @@ function parseStructureFromWorkingDirectory() {
   const superDomainName = getSuperDomainFromPath(pathToComponentOutput);
   const domainName = getDomainFromPath(pathToComponentOutput);
   const libName = getLibFromPath(pathToComponentOutput);
+  const offsetFromProject = getProjectOffsetFromPath(pathToComponentOutput);
   if (superDomainName === "" || domainName === "" || libName === "")
     throw new Error("Parse error");
 
-  return { superDomainName, domainName, libName };
+  return { superDomainName, domainName, libName, offsetFromProject };
 }
 
 export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   // Establish options
-  let completeOptions: Required<FeatureGeneratorSchema>;
+  let completeOptions: CompleteOptions;
   if (!optionsAreComplete(options)) {
     completeOptions = {
       ...parseStructureFromWorkingDirectory(),
       componentName: options.componentName,
     };
   } else {
-    completeOptions = options as Required<FeatureGeneratorSchema>;
+    completeOptions = {
+      ...(options as Required<FeatureGeneratorSchema>),
+      offsetFromProject: "/src/lib/components/" + options.componentName,
+    };
   }
-  const offsetFromProjectRoot = "/src/lib/components";
 
   // eslint-disable-next-line no-console
-  console.log("Generating component in:", offsetFromProjectRoot);
+  console.log("Generating component in:", completeOptions.offsetFromProject);
 
-  // Add template files
-  const normalizedOptions = normalizeOptions(
-    tree,
-    completeOptions,
-    offsetFromProjectRoot
-  );
-  // TODO: after unit testing is implemented, try and clean up naming variables
-  addFiles(tree, normalizedOptions);
+  // Run generator with options
+  const normalizedOptions = normalizeOptions(tree, completeOptions);
+  const angularGeneratorOptions: Schema = {
+    name: normalizedOptions.componentName,
+    project: normalizedOptions.projectName,
+    standalone: true,
+    selector: kebabify(normalizedOptions.componentName),
+    displayBlock: true,
+    style: "scss",
+    prefix:
+      normalizedOptions.superDomainName === "shared"
+        ? "sam-"
+        : normalizedOptions.domainName,
+  };
+  componentGenerator(tree, angularGeneratorOptions);
 
   //   await formatFiles(tree);
 }

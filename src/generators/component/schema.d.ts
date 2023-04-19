@@ -1,4 +1,4 @@
-export interface FeatureGeneratorSchema {
+export interface ComponentGeneratorSchema {
   componentName: string;
   superDomainName?: string;
   subDomainName?: string;

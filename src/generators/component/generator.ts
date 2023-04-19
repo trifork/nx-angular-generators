@@ -18,20 +18,20 @@ import {
 import { kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
 import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
-import { FeatureGeneratorSchema } from './schema';
+import { ComponentGeneratorSchema } from './schema';
 import { changeEslintPrefix } from '../../utils/changeEslintPrefix';
 import path = require('path');
 import { Schema } from '@nrwl/angular/src/generators/component/schema';
 import { writeFileSync, readFileSync } from 'fs';
 
 interface CompleteOptionsGeneric
-  extends Required<Omit<FeatureGeneratorSchema, 'subDomainName'>> {
+  extends Required<Omit<ComponentGeneratorSchema, 'subDomainName'>> {
   // Null if called with all options, where cwd parsing is not applicable
   cwdOffsetFromProject: string | null;
   componentOutPutRelativeToProject: string;
 }
 
-interface CompleteOptionsShared extends Required<FeatureGeneratorSchema> {
+interface CompleteOptionsShared extends Required<ComponentGeneratorSchema> {
   // Null if called with all options, where cwd parsing is not applicable
   cwdOffsetFromProject: string | null;
   componentOutPutRelativeToProject: string;
@@ -75,7 +75,7 @@ function normalizeOptions(
   };
 }
 
-function optionsAreComplete(options: FeatureGeneratorSchema) {
+function optionsAreComplete(options: ComponentGeneratorSchema) {
   return !!options.domainName && !!options.libName && !!options.superDomainName;
 }
 
@@ -202,17 +202,21 @@ function componentAllowedOnPath(completeOptions: CompleteOptionsGeneric) {
   );
 }
 
-export default async function (tree: Tree, options: FeatureGeneratorSchema) {
+export default async function (
+  tree: Tree,
+  options: ComponentGeneratorSchema,
+  minimalInteractive = false
+) {
   // Establish options
   let completeOptions: CompleteOptionsGeneric | CompleteOptionsShared;
-  if (!optionsAreComplete(options)) {
+  if (!optionsAreComplete(options) || minimalInteractive) {
     completeOptions = {
       ...parseStructureFromWorkingDirectory(),
       componentName: options.componentName,
     };
   } else {
     completeOptions = {
-      ...(options as Required<FeatureGeneratorSchema>),
+      ...(options as Required<ComponentGeneratorSchema>),
       cwdOffsetFromProject: null,
       componentOutPutRelativeToProject:
         '/src/lib/components/' + options.componentName,
@@ -225,11 +229,9 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
       'Not a good spot for a component! In a generic domain, components must be in ui lib or feature lib'
     );
 
-  // eslint-disable-next-line no-console
-
   // Run generator with options
   const normalizedOptions = normalizeOptions(tree, completeOptions);
-  console.log('\noptions\n' + JSON.stringify(normalizedOptions, null, 2));
+
   const angularGeneratorOptions: Schema = {
     name: normalizedOptions.componentName,
     project: normalizedOptions.projectName,

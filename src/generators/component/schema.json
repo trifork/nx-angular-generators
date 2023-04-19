@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "Feature",
+  "$id": "Component",
   "title": "",
   "type": "object",
   "properties": {
@@ -35,14 +35,14 @@
       "x-prompt": "Input the name of domain to which a component should be added. E.g. 'medicine'. Do not prepend with '/libs/' or superdomain name.\n"
     },
     "subDomainName": {
-        "type": "string",
-        "description": "",
-        "$default": {
-          "$source": "argv",
-          "index": 3
-        },
-        "x-prompt": "ONLY IN RELEVANT IN <superdomain>/shared! Input the name of the subDomain to which a component should be added. E.g. 'ui' or 'util'.\n"
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 3
       },
+      "x-prompt": "ONLY IN RELEVANT IN <superdomain>/shared! Input the name of the subDomain to which a component should be added. E.g. 'ui' or 'util'.\n"
+    },
     "libName": {
       "type": "string",
       "description": "",

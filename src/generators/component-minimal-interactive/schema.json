@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "ComponentMinimalInteractive",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "componentName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "pattern": "^(?!.*[/])(?!.*component).*$",
+      "x-prompt": "Input the name of the component, e.g. 'id-input'. Do not append with '.component' or '-component'.\n"
+    }
+  },
+  "required": ["componentName"]
+}

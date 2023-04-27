@@ -22,7 +22,7 @@
         "$source": "argv",
         "index": 1
       },
-      "pattern": "^[^@]*@[^@]*$",
+      "pattern": "^(?!.*/libs)(?!.*@).*$",
       "x-prompt": "Input the path where the common generated typescript types should be places. Do not prepend with /libs or @<npm-scope>\n"
     },
     "superDomainName": {

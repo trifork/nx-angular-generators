@@ -1,7 +1,7 @@
 {
   "npmScope": "example",
   "name": "@trifork/nx-angular-generators",
-  "version": "0.0.65",
+  "version": "0.0.66",
   "description": "Generators to be used to create libs according to our guidelines found in @trifork/nx-angular",
   "scripts": {
     "build": "nx build nx-angular-generators && cp ./package.json ./dist/package.json",

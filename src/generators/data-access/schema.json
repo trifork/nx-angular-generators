@@ -23,7 +23,7 @@
         "index": 1
       },
       "pattern": "^(?!.*/libs)(?!.*@).*$",
-      "x-prompt": "Input the path to the lib where the common generated typescript types should be places. This generator assumes, that libs are placed in /libs. Do not prepend with /libs or @<npm-scope>. The types will be located in <npmScope>/<basetypePath>/src/lib/generated/api-schema-types.generated.ts \n"
+      "x-prompt": "Input the path to the lib where the common generated typescript types should be places. This generator assumes, that libs are placed in /libs. Do not prepend with /libs or @<npm-scope>. The types will be located in <npmScope>/<basetypePath>/src/lib/generated/api-schema-types.generated.ts. Example: \"neurology/shared/api/models\" \n"
     },
     "superDomainName": {
       "type": "string",

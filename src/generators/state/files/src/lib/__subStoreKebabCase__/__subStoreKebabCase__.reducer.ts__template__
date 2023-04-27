@@ -13,7 +13,7 @@ export const initialState: <%=subStorePascalCase%>State = {
   status: HttpRequestStatus.IDLE,
 };
 
-export const <%=subStoreCamelCase%>Reducer = createReducer(
+export const <%=subStorePascalCase%>Reducer = createReducer(
   initialState,
   on(actions.getData, (state) => ({
     ...state,

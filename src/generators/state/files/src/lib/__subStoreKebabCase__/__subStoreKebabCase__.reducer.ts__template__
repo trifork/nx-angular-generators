@@ -2,13 +2,6 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as actions from './<%=subStoreKebabCase%>.actions';
 
-export enum HttpRequestStatus {
-  IDLE = 'IDLE',
-  IN_PROGRESS = 'IN_PROGRESS',
-  FAILURE = 'FAILURE',
-  SUCCESS = 'SUCCESS',
-}
-
 export interface <%=subStorePascalCase%>State {
   data: string;
   status: HttpRequestStatus;

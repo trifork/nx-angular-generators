@@ -8,7 +8,7 @@
     "bumpbuild": "npm version patch && nx build nx-angular-generators && cp ./package.json ./dist/package.json",
     "publish": "nx build nx-angular-generators",
     "generate:example:state": "nx generate @trifork/nx-angular-generators:state diabetes medicine substore2",
-    "generate:example:data-access": "nx generate @trifork/nx-angular-generators:data-access diabetes medicine",
+    "generate:example:data-access": "nx generate @trifork/nx-angular-generators:data-access @test shared/domtest/subdomtest/libtest diabetes medicine",
     "generate:example:models": "nx generate @trifork/nx-angular-generators:models diabetes medicine",
     "generate:example:component": "nx generate @trifork/nx-angular-generators:component woggi",
     "generate:example:shared": "nx generate @trifork/nx-angular-generators:shared diabetes subtest libtest"

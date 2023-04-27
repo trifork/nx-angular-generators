@@ -5,7 +5,7 @@
   "title": "",
   "type": "object",
   "properties": {
-    "basetypePath": {
+    "npmScope": {
       "type": "string",
       "description": "",
       "$default": {
@@ -13,9 +13,9 @@
         "index": 0
       },
       "pattern": "^[^@]*@[^@]*$",
-      "x-prompt": "Input the path where the common generated typescript types should be places. Do not prepend with /libs or @<npm-scope>\n"
+      "x-prompt": "Input the npm scope, that can be used to access the common generated typescript types. Must include @\n"
     },
-    "npmScope": {
+    "basetypePath": {
       "type": "string",
       "description": "",
       "$default": {
@@ -23,7 +23,7 @@
         "index": 1
       },
       "pattern": "^[^@]*@[^@]*$",
-      "x-prompt": "Input the npm scope, that can be used to access the common generated typescript types. Must include @\n"
+      "x-prompt": "Input the path where the common generated typescript types should be places. Do not prepend with /libs or @<npm-scope>\n"
     },
     "superDomainName": {
       "type": "string",

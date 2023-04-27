@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import * as actions from './<%=subStoreKebabCase%>.actions';
+import { HttpRequestStatus } from '<%=importEnumPath%>';
 
 export interface <%=subStorePascalCase%>State {
   data: string;

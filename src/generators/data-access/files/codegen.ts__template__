@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   schema: "../shared/schema/graphql/**/*.graphqls",
   documents: "<%=projectRoot%>/src/lib/graphql/user.graphql",
   generates: {
-    "libs/diabetes/shared/api/models/src/lib/generated/api-schema-types.generated.ts":
+    "libs/<%=basetypePath%>/src/lib/generated/api-schema-types.generated.ts":
       {
         plugins: ["typescript"],
       },
@@ -14,7 +14,7 @@ const config: CodegenConfig = {
       presetConfig: {
         extension: ".generated.ts",
         folder: "../generated",
-        baseTypesPath: "~@sam/diabetes/shared/api/models",
+        baseTypesPath: "~<%=npmScope%>/<%=basetypePath%>",
       },
       plugins: ["typescript-operations", "typescript-apollo-angular"],
       config: { addExplicitOverride: true, withHooks: true },

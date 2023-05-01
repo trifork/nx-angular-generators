@@ -164,7 +164,7 @@ export async function tagsGenerator(
     // Output rule to console
     if (allowedTags.length >= 1) {
       console.log(
-        `ADDED RULE to root .eslintrc.json, that tag '${mostSpecificSourceTag}' can only depend on tags:`
+        `ADDED RULE to root .eslintrc.base.json, that tag '${mostSpecificSourceTag}' can only depend on tags:`
       );
       Object.values(allowedTags).forEach((tag) => {
         console.log(tag);

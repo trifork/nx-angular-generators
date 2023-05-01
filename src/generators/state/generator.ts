@@ -88,5 +88,17 @@ export default async function (tree: Tree, options: StateGeneratorSchema) {
   // Prune compileroptions from the new tsconfig
   pruneCompilerOptions(tree, normalizedOptions.projectRoot);
 
+  // Suggest user to create enum
+  const suggestion = `
+  The generated example files assumes you have a type like this in the path provided
+  export enum HttpRequestStatus {
+    IDLE = 'IDLE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FAILURE = 'FAILURE',
+    SUCCESS = 'SUCCESS',
+  }
+  `;
+  console.log(suggestion);
+
   await formatFiles(tree);
 }

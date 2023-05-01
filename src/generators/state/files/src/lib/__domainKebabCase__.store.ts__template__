@@ -1,5 +1,5 @@
 import { Action, ActionReducer, combineReducers, createFeatureSelector } from '@ngrx/store';
-import { <%=subStoreCamelCase%>Reducer, <%=subStorePascalCase%>State } from './<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.reducer';
+import { <%=subStorePascalCase%>Reducer, <%=subStorePascalCase%>State } from './<%=subStoreKebabCase%>/<%=subStoreKebabCase%>.reducer';
 
 export const <%=domainAllCaps%>_DOMAIN_FEATURE_KEY = '<%=domainPascalCase%>';
 

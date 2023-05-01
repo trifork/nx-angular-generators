@@ -5,12 +5,32 @@
   "title": "",
   "type": "object",
   "properties": {
-    "superDomainName": {
+    "npmScope": {
       "type": "string",
       "description": "",
       "$default": {
         "$source": "argv",
         "index": 0
+      },
+      "pattern": "^[^@]*@[^@]*$",
+      "x-prompt": "Input the npm scope, that can be used to access the common generated typescript types. Must include @\n"
+    },
+    "basetypePath": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "pattern": "^(?!.*/libs)(?!.*@).*$",
+      "x-prompt": "Input the path to the lib where the common generated typescript types should be places. This generator assumes, that libs are placed in /libs. Do not prepend with /libs or @<npm-scope>. The types will be located in <npmScope>/<basetypePath>/src/lib/generated/api-schema-types.generated.ts. Example: \"neurology/shared/api/models\" \n"
+    },
+    "superDomainName": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 2
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of the superDomain to which a data-access lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
@@ -20,11 +40,11 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 1
+        "index": 3
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of domain to which a data-access lib should be added. E.g. 'medicine'. Do not prepend with '/libs/' or superdomain name.\n"
     }
   },
-  "required": ["domainName", "superDomainName"]
+  "required": ["basetypePath", "npmScope", "domainName", "superDomainName"]
 }

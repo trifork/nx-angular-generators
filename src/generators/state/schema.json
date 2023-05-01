@@ -10,7 +10,7 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 0
+        "index": 1
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of the superDomain to which a state lib should be added. E.g. 'neurology'. Do not prepend with '/libs/'.\n"
@@ -20,7 +20,7 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 1
+        "index": 2
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of domain to which a state lib should be added. E.g. 'medicine'. Do not prepend with '/libs/' or superdomain name.\n"
@@ -30,10 +30,19 @@
       "description": "",
       "$default": {
         "$source": "argv",
-        "index": 2
+        "index": 3
       },
       "x-prompt": "Please provide a name for the initial substore"
+    },
+    "importEnumPath": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Please specify a path to a httprequest enum, which will be imported in the example files. E.g. @org/neurology/shared/api/models"
     }
   },
-  "required": ["domainName", "initialSubStoreName", "superDomainName"]
+  "required": ["domainName", "initialSubStoreName", "superDomainName", "importEnumPath"]
 }

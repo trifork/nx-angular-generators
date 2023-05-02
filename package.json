@@ -39,6 +39,9 @@
     "tslib": "^2.5.0",
     "zone.js": "^0.12.0"
   },
+  "peerDependencies": {
+    "@nrwl/cli": "15.8.9"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.2.0",
     "@angular-devkit/core": "^15.2.6",

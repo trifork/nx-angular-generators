@@ -15,7 +15,7 @@ import {
 import * as path from 'path';
 import { formatCapitalizations, kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { generateSourceTags, generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
 import { DataAccessGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends DataAccessGeneratorSchema {
@@ -65,26 +65,18 @@ const libType = 'data_access';
 
 export default async function (tree: Tree, options: DataAccessGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(
-    options.superDomainName,
-    options.domainName,
-    libType
-  );
+
+  const sourceTags = generateSourceTags({
+    types: [ "lib", libType ],
+    scopes: [ options.superDomainName, options.domainName ]
+  })
+
   await libraryGenerator(tree, {
     buildable: true,
     name: libType,
     skipModule: true,
     directory: kebabify(options.superDomainName) + '/' + kebabify(options.domainName),
-    tags: Object.values(sourceTags).join(),
-  });
-
-  // Update tags and set rules
-  await tagsGenerator(tree, {
-    superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ['util', 'auth', 'api'],
-    allowedLibTypesInDomain: ['util', 'models'],
-    domainName: options.domainName,
-    libType,
+    tags: sourceTags,
   });
 
   // Add template files

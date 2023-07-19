@@ -12,6 +12,14 @@ import {
 import { eslintJSON, moduleBoundsRuleConfig } from 'src/utils/changeEslintPrefix';
 
 // Tags to be set on the lib itself (package.json)
+export function generateSourceTags(args: {  types: string[], scopes: string[] }) {
+  const { types = [], scopes = []} = args;
+
+  const typesMapped = types.map(type => `type:${kebabify(type)}`);
+  const scopesMapped = scopes.map(scope => `scope:${kebabify(scope)}`)
+
+  return { ...typesMapped, ...scopesMapped}.join(", ");
+}
 export function generateSourceTagsGeneric(
   superDomainName: string,
   domainName: string,

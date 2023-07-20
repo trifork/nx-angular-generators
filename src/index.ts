@@ -1,2 +1,2 @@
 export * from './generators/state/generator';
-export * from './generators/tags/generator';
+export * from './utils/tags.util';

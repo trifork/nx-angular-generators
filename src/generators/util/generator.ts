@@ -1,17 +1,10 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import {
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nrwl/devkit';
+import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree, } from '@nrwl/devkit';
 import * as path from 'path';
 import { formatCapitalizations, kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
 import { UtilGeneratorSchema } from './schema';
+import { generateTags } from "../../utils/tags.util";
 
 interface NormalizedSchema extends UtilGeneratorSchema {
   projectName: string;
@@ -55,26 +48,16 @@ const libType = 'util';
 
 export default async function (tree: Tree, options: UtilGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(
-    options.superDomainName,
-    options.domainName,
-    libType
-  );
+  const tags = generateTags({
+    types: [ "lib", libType ],
+    scopes: [ options.superDomainName, options.domainName ]
+  })
   await libraryGenerator(tree, {
     buildable: true,
     name: libType,
     skipModule: true,
-    directory: options.superDomainName + '/' + options.domainName,
-    tags: Object.values(sourceTags).join(),
-  });
-
-  // Update tags and set rules
-  await tagsGenerator(tree, {
-    superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ['util', 'api-models', 'models'],
-    allowedLibTypesInDomain: ['models'],
-    domainName: options.domainName,
-    libType,
+    directory: `${options.superDomainName}/${options.domainName}`,
+    tags
   });
 
   // Add template files

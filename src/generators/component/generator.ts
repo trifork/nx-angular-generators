@@ -1,28 +1,8 @@
-import { componentGenerator, libraryGenerator } from '@nrwl/angular/generators';
-import {
-  convertNxGenerator,
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  getWorkspacePath,
-  names,
-  offsetFromRoot,
-  Tree,
-  updateJson,
-  workspaceRoot,
-} from '@nrwl/devkit';
-import {
-  scssGenerator,
-  configurationGenerator as stylelintConfigGenerator,
-} from 'nx-stylelint';
+import { componentGenerator } from '@nrwl/angular/generators';
+import { formatFiles, getWorkspaceLayout, Tree, workspaceRoot, } from '@nrwl/devkit';
 import { kebabify } from '../../utils/naming';
-import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
 import { ComponentGeneratorSchema } from './schema';
-import { changeEslintPrefix } from '../../utils/changeEslintPrefix';
-import path = require('path');
 import { Schema } from '@nrwl/angular/src/generators/component/schema';
-import { writeFileSync, readFileSync } from 'fs';
 
 interface CompleteOptionsGeneric
   extends Required<Omit<ComponentGeneratorSchema, 'subDomainName'>> {

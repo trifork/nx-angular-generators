@@ -1,12 +1,9 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
 import { formatFiles, getWorkspaceLayout, Tree } from '@nrwl/devkit';
-import {
-  scssGenerator,
-  configurationGenerator as stylelintConfigGenerator,
-} from 'nx-stylelint';
+import { configurationGenerator as stylelintConfigGenerator, scssGenerator, } from 'nx-stylelint';
 import { kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { generateTags } from '../../utils/tags.util';
 import { FeatureGeneratorSchema } from './schema';
 import { changeEslintPrefix } from '../../utils/changeEslintPrefix';
 
@@ -42,12 +39,11 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   const selectorPrefix = kebabify(superDomainName);
 
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(
-    superDomainName,
-    domainName,
-    libType,
-    featureName
-  );
+  const tags = generateTags({
+    types: [ "lib", libType ],
+    scopes: [ superDomainName, domainName ]
+  })
+
   await libraryGenerator(tree, {
     selector: `${kebabify(superDomainName)}-rename-this`,
     buildable: true,
@@ -58,8 +54,8 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
     displayBlock: true,
     style: 'scss',
     simpleName: true,
-    directory: superDomainName + '/' + domainName,
-    tags: Object.values(sourceTags).join(),
+    directory: `${superDomainName}/${domainName}`,
+    tags
   });
 
   // Generate stylelint
@@ -73,17 +69,6 @@ export default async function (tree: Tree, options: FeatureGeneratorSchema) {
   await scssGenerator(tree, {
     project: fullResultingProjectName,
     skipFormat: false,
-  });
-
-  // Update tags and set rules
-  await tagsGenerator(tree, {
-    superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ['api-models'],
-    allOfSharedAllowed: true,
-    allowedLibTypesInDomain: ['models', 'state', 'ui', 'util'],
-    domainName,
-    libType,
-    libName: featureName,
   });
 
   //   Prune compileroptions from the new tsconfig

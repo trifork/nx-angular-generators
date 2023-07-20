@@ -1,16 +1,9 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import {
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nrwl/devkit';
+import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree, } from '@nrwl/devkit';
 import * as path from 'path';
 import { formatCapitalizations, kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsGeneric, tagsGenerator } from '../tags/generator';
+import { generateTags } from '../../utils/tags.util';
 import { StateGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends StateGeneratorSchema {
@@ -59,26 +52,17 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (tree: Tree, options: StateGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsGeneric(
-    options.superDomainName,
-    options.domainName,
-    libType
-  );
+  const tags = generateTags({
+    types: [ "lib", libType ],
+    scopes: [ options.superDomainName, options.domainName ]
+  })
+
   await libraryGenerator(tree, {
     name: libType,
     buildable: true,
     skipModule: true,
-    directory: options.superDomainName + '/' + options.domainName,
-    tags: Object.values(sourceTags).join(),
-  });
-
-  // Update tags and set rules
-  await tagsGenerator(tree, {
-    superDomainName: options.superDomainName,
-    allowedSubDomainsInShared: ['auth', 'api'],
-    allowedLibTypesInDomain: ['data_access', 'models', 'util'],
-    domainName: options.domainName,
-    libType: 'state',
+    directory: `${options.superDomainName}/${options.domainName}`,
+    tags
   });
 
   // Add template files

@@ -1,17 +1,9 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import {
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nrwl/devkit';
+import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree, } from '@nrwl/devkit';
 import * as path from 'path';
 import { kebabify } from '../../utils/naming';
 import { pruneCompilerOptions } from '../../utils/pruneCompilerOptions';
-import { generateSourceTagsShared, tagsGenerator } from '../tags/generator';
-import { TagsGeneratorOptionsShared } from '../tags/generator.model';
+import { generateTags } from '../../utils/tags.util';
 import { SharedGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends SharedGeneratorSchema {
@@ -55,40 +47,18 @@ const domainName = 'shared';
 
 export default async function (tree: Tree, options: SharedGeneratorSchema) {
   // Generate standard lib
-  const sourceTags = generateSourceTagsShared(
-    options.superDomainName,
-    domainName,
-    options.subDomainName,
-    options.libName
-  );
+  const tags = generateTags({
+    types: [ "lib" ],
+    scopes: [ options.superDomainName, domainName, options.subDomainName ]
+  })
+
   await libraryGenerator(tree, {
     buildable: true,
     name: options.libName,
     skipModule: true,
     directory: `${options.superDomainName}/${domainName}/${options.subDomainName}`,
-    tags: Object.values(sourceTags).join(),
+    tags
   });
-
-  // Parse optional allowed subdomains provided by user
-  const allowedSubDomainsUserInputKebab: string[] = options.allowedSubDomains
-    ? options.allowedSubDomains
-        .split(',')
-        .map((str) => str.replace(' ', ''))
-        .map((str) => kebabify(str))
-    : [];
-
-  // Update tags and set rules
-  const tagsGeneratorOptions: TagsGeneratorOptionsShared = {
-    ...options,
-    allowedSubDomainsInShared: [
-      'util',
-      'models',
-      'api-models',
-      ...allowedSubDomainsUserInputKebab,
-    ],
-    domainName,
-  };
-  await tagsGenerator(tree, tagsGeneratorOptions);
 
   // Add template files
   const normalizedOptions = normalizeOptions(tree, options);

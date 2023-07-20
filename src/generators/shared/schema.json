@@ -34,16 +34,6 @@
       },
       "pattern": "^(?!.*[/])(?!.*shared).*$",
       "x-prompt": "Input the name of the lib, e.g. 'data-access' or 'buttons'. Do not prepend with domain or subdomain.\n"
-    },
-    "allowedSubDomains": {
-      "type": "string",
-      "description": "",
-      "$default": {
-        "$source": "argv",
-        "index": 3
-      },
-      "pattern": "^(?!.*[/])(?!.*shared).*$",
-      "x-prompt": "(Optional) add other shared subdomains, that this lib can depend upon. Write multiple subdomains comma separated.\n"
     }
   },
   "required": ["subDomainName", "libName", "superDomainName"]
